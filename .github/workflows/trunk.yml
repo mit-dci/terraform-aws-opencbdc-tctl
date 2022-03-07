@@ -1,8 +1,8 @@
-name: Main (apply tag)
+name: Trunk (apply tag)
 on:
   push:
     branches:
-      - main
+      - trunk
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,5 +14,5 @@ jobs:
       uses: anothrNick/github-tag-action@1.19.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        RELEASE_BRANCHES: main
+        RELEASE_BRANCHES: trunk
         WITH_V: true
