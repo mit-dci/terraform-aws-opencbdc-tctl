@@ -1,16 +1,19 @@
 # opencbdc-tctl Environment
-Configuration in this directory can be used to provision an environment mirroring that used in the paper. 
+Configuration in this directory can be used to provision an environment mirroring that used in the paper.
 
 # Usage
 1. Complete the [pre-provisioning steps](../../README.md#Pre-Provisioning)
-2. Set appropriate values for [inputs](##Inputs). These are mainly vars that will be specific to your environment. Each is defaulted to an empty string. You can overwrite the values directly in `variables.tf` or in another way of your choosing.
+2. Set appropriate values for [inputs](##Inputs).
+These are mainly vars that will be specific to your environment.
+Each is defaulted to an empty string. You can overwrite the values directly in `variables.tf` or in another way of your choosing.
 3. Execute:
 ```
 $ terraform init
 $ terraform plan
 $ terraform apply
 ```
-Note that this will create resources in your AWS account which will cost money. Be sure to run terraform destroy when you don't need these resources.
+Note that this will create resources in your AWS account which will cost money.
+Be sure to run terraform destroy when you don't need these resources.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
