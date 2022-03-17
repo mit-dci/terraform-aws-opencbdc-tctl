@@ -98,8 +98,8 @@ Using the credentials you configured for your environment, run:
 ```
 aws lambda invoke --function-name test-controller-certbot-lambda /dev/stdout
 ```
-*Note* The lambda usually takes a few minutes to complete it's execution.
-*Note* The lambda will create a certificate in [AWS Certificate Manager](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html).
+<br />**Note -** The lambda usually takes a few minutes to complete it's execution.
+<br />**Note -** The lambda will create a certificate in [AWS Certificate Manager](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html).
 This is not tied to the terraform automation, so you will need to delete it manually.
 after running a `terraform destroy`.
 You should delete it only after you've destroyed everything else.
@@ -129,11 +129,13 @@ When the environment is healthy, these services should look like the following:
 
 The module will generate some DNS records in [AWS Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html) for you.
 A CNAME record is created in Route53 which will point to the UI load balancer.
-The format of this will be `test-controller.<environment>.<base_domain>`.
+The format of this will be `test-controller.<base_domain>`.
 The `environment` and `base_domain` values will be set to whatever you configured to the corresponding Terraform vars.
 Assuming your environment is up and configured properly, you should be able to access by typing the url into any browser.
 In a fresh environment, you will need to add a client certificate into the environment in order to authenticate with the test controller.
 The process for this is documented in the test controller's [README](https://github.com/mit-dci/opencbdc-tctl#authentication).
+<br />**Note -** This module configures the port 8443 to route to the auth endpoint via the network load balancer.
+This means the port must be specified in the url you enter into the browser `https://test-controller.<base_domain>:8443/auth`.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
