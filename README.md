@@ -112,6 +112,15 @@ You can verify this by checking the most recent execution status of `test-contro
 
 ![Diagram](docs/codepipeline-success.png)
 
+Codepipeline will poll for the latest changes to the test controller repo.
+This way you will recieve updates automatically without any manual intervention.
+Occasionally, Codepipeline may fail during the deployment process.
+These are usually transient errors which will resolve by simply running the pipeline again.
+Using the credentials you configured for your environment, run:
+```
+aws lambda invoke --region us-east-1 --function-name test-controller-certbot-lambda /dev/stdout
+```
+
 ## Monitor Health Checks
 
 Both the test controller's UI and API exist inside of a single ECS task.
@@ -125,7 +134,7 @@ When the environment is healthy, these services should look like the following:
 
 ![Healthy Target Group](docs/ecs-running-task.png)
 
-# Access the Test Controller
+## Access the Test Controller
 
 The module will generate some DNS records in [AWS Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html) for you.
 A CNAME record is created in Route53 which will point to the UI load balancer.
