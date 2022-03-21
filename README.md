@@ -103,7 +103,7 @@ aws lambda invoke --region us-east-1 --function-name test-controller-certbot-lam
 This is not tied to the terraform automation, so you will need to delete it manually.
 after running a `terraform destroy`.
 You should delete it only after you've destroyed everything else.
-To so, simply select the certificate with the test controller domain name `test-controller.<base_domain>` and hit "delete".
+To do so, simply select the certificate with the test controller domain name `test-controller.<base_domain>` and hit "delete".
 
 ## Monitor Codepipeline
 The test controller pipeline should run automatically.
