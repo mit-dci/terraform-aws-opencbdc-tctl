@@ -111,8 +111,8 @@ The lambda is configured to fire off every twelve hours to check that the cert h
 If you wish to run tests in your environment immediately provisioning, you will need to invoke the lambda yourself.
 You do this via the AWS CLI.
 Using the credentials you configured for your environment, run:
-```
-aws lambda invoke --region us-east-1 --function-name test-controller-certbot-lambda /dev/stdout
+```console
+$ aws lambda invoke --region us-east-1 --function-name test-controller-certbot-lambda /dev/stdout
 ```
 <br />**Note -** The lambda usually takes a few minutes to complete it's execution.
 <br />**Note -** The lambda will create a certificate in [AWS Certificate Manager](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html).
