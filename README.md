@@ -36,7 +36,7 @@ The module requires that you have [Terraform installed](https://learn.hashicorp.
 Specifics about versioning are listed [here](#Requirements).
 Also useful, but not completely necessary is the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
 If you have other Terraform projects with different version requirements, you can manage them with [tfenv](https://github.com/tfutils/tfenv).
-This project is pre-configured to pull the proper terraofrm version via tfenv.
+This project is pre-configured to pull the proper terraform version via tfenv.
 Simply run `tfenv install`.
 You will also need Docker installed locally. You can find instructions on how to do so for your machine [here](https://docs.docker.com/engine/install/).
 You won't need to run any Docker commands, just be sure that it's running.
