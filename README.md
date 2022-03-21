@@ -116,8 +116,8 @@ This way you will recieve updates automatically without any manual intervention.
 Occasionally, Codepipeline may fail during the deployment process.
 These are usually transient errors which will resolve by simply running the pipeline again.
 Using the credentials you configured for your environment, run:
-```
-aws lambda invoke --region us-east-1 --function-name test-controller-certbot-lambda /dev/stdout
+```console
+$ aws lambda invoke --region us-east-1 --function-name test-controller-certbot-lambda /dev/stdout
 ```
 
 ## Monitor Health Checks
