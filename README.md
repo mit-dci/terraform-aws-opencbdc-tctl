@@ -51,14 +51,14 @@ AWS can use either ED25519 or 2048-bit SSH-2 RSA keys.
 There are a number of third party tools that can be used to generate an approrpiate keypair.
 One way is via the `ssh-keygen` command provided by [OpenSSH](https://www.openssh.com/).
 ```console
-ssh-keygen -t RSA -f /path/to/key/file/id_rsa
+$ ssh-keygen -t RSA -f /path/to/key/file/id_rsa
 ``` 
 Installation for OpenSSH will depend on the OS of your machine.
 * On MacOS OpenSSH should be installed by default.
 * On [Windows](https://ubuntu.com/tutorials/ssh-keygen-on-windows#1-overview) you may need to follow addional steps.
 * On Ubuntu/Debian/Linux Mint:
 ```console
-sudo apt-get install openssh-client
+$ sudo apt-get install openssh-client
 ``` 
 * On RHEL/Centos/Fedora:
 ```console
