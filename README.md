@@ -64,7 +64,7 @@ sudo apt-get install openssh-client
 ```console
 sudo yum -y install openssh-clients
 ```
-After doing so, provide the contents of the public key file to the module's `public_key` var.
+After doing so, provide the contents of the public key (`id_rsa.pub`) file to the module's `public_key` var.
 The ssh private key should remain private.
 
 ## Register a Domain
