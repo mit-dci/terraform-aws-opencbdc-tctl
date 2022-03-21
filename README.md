@@ -38,7 +38,7 @@ Also useful, but not completely necessary is the [AWS CLI](https://docs.aws.amaz
 If you have other Terraform projects with different version requirements, you can manage them with [tfenv](https://github.com/tfutils/tfenv).
 This project is pre-configured to pull the proper terraform version via tfenv.
 Simply run `tfenv install`.
-You will also need Docker installed locally. You can find instructions on how to do so for your machine [here](https://docs.docker.com/engine/install/).
+Docker must be [installed and running](https://docs.docker.com/engine/install/) on your local machine.
 You won't need to run any Docker commands, just be sure that it's running.
 If you're unfamiliar with Docker and curious, you can take a look at their [getting started page](https://docs.docker.com/get-started/).
 
