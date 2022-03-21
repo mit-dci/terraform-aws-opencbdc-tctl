@@ -56,11 +56,11 @@ ssh-keygen -t RSA -f /path/to/key/file/id_rsa
 Installation for OpenSSH will depend on the OS of your machine.
 * On MacOS OpenSSH should be installed by default.
 * On [Windows](https://ubuntu.com/tutorials/ssh-keygen-on-windows#1-overview) you may need to follow addional steps.
-* On Ubuntu/Debian/Linux Mint
+* On Ubuntu/Debian/Linux Mint:
 ```console
 sudo apt-get install openssh-client
 ``` 
-* On RHEL/Centos/Fedora
+* On RHEL/Centos/Fedora:
 ```console
 sudo yum -y install openssh-clients
 ```
