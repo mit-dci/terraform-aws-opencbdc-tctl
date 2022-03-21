@@ -71,7 +71,7 @@ In order to perform this Codepipeline will clone the test controller codebase.
 Codepipeline must be connected to a Github account to clone from a Github repo.
 A [personal access token](https://docs.github.com/en/enterprise/2.17/user/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) should be passed to codepipeline for authentication.
 The token should only need the `public_repo` permission.
-After creating this, you can provide it to the module via `test_controller_github_access_token` var.
+After creating this, you can provide it to the module via the `test_controller_github_access_token` var.
 
 ## Configure IAM Permissions
 
