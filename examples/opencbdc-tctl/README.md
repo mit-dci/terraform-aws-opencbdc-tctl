@@ -4,7 +4,7 @@ Configuration in this directory can be used to provision an environment mirrorin
 # Usage
 1. Complete the [pre-provisioning steps](../../README.md#Pre-Provisioning).
 Please be sure that you are authenticated with AWS.
-2. Set appropriate values for [inputs](##Inputs).
+2. Set appropriate values for [inputs](#Inputs).
 These are mainly vars that will be specific to your environment.
 Each is defaulted to an empty string. You can overwrite the values directly in `variables.tf` or in another way of your choosing.
 3. Execute:
