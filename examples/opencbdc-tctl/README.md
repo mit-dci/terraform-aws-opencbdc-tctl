@@ -8,7 +8,7 @@ Please be sure that you are authenticated with AWS.
 These are mainly vars that will be specific to your environment.
 Each is defaulted to an empty string. You can overwrite the values directly in `variables.tf` or in another way of your choosing.
 3. Execute:
-```
+```console
 $ terraform init
 $ terraform plan
 $ terraform apply
