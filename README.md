@@ -5,7 +5,7 @@ All the necessary resources are created in [Amazon Web Services (AWS)](https://a
 The Terraform configuration is wrapped into a single [module](https://www.terraform.io/language/modules) that leverages a number of sub-modules.
 The root module primarily deploys the [OpenCBDC test controller](https://github.com/mit-dci/opencbdc-tctl) along numerous supporting resources.
 You can follow along with the steps of this README in order to deploy the test controller.
-If you are new to Terraform, when you reach [Provision](#Provision) step, it is reccomended that you use the pre-created configuration linked there as the entrypoint for your deployment.
+If you are new to Terraform, when you reach [Provision](#Provision), it is reccomended that you use the pre-created configuration linked there as the entrypoint for your deployment.
 
 # Architecture
 
