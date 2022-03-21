@@ -33,7 +33,7 @@ To access to the bastion host you can either use ssh, which is configured by thi
 # Required Software
 
 The module requires that you have [Terraform installed](https://learn.hashicorp.com/tutorials/terraform/install-cli).
-Specifics about versioning are listed [here](##Requirements).
+Specifics about versioning are listed [here](#Requirements).
 Also useful, but not completely necessary is the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
 If you have other Terraform projects with different version requirements, you can manage them with [tfenv](https://github.com/tfutils/tfenv).
 This project is pre-configured to pull the proper terraofrm version via tfenv.
