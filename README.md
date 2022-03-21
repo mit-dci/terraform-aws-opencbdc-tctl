@@ -100,8 +100,7 @@ aws lambda invoke --region us-east-1 --function-name test-controller-certbot-lam
 ```
 <br />**Note -** The lambda usually takes a few minutes to complete it's execution.
 <br />**Note -** The lambda will create a certificate in [AWS Certificate Manager](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html).
-This is not tied to the terraform automation, so you will need to delete it manually.
-after running a `terraform destroy`.
+This is not tied to the terraform automation, so you will need to delete it manually after running a `terraform destroy`.
 You should delete it only after you've destroyed everything else.
 To do so, simply select the certificate with the test controller domain name `test-controller.<base_domain>` and hit "delete".
 
