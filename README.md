@@ -59,7 +59,7 @@ For [Windows](https://ubuntu.com/tutorials/ssh-keygen-on-windows#1-overview) you
 For Linux:
 * On Ubuntu/Debian/Linux Mint
 ```console
-$ sudo apt-get install openssh-client
+sudo apt-get install openssh-client
 ``` 
 * On RHEL/Centos/Fedora
 ```console
