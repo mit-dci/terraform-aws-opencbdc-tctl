@@ -62,7 +62,7 @@ sudo apt-get install openssh-client
 ``` 
 * On RHEL/Centos/Fedora:
 ```console
-sudo yum -y install openssh-clients
+$ sudo yum -y install openssh-clients
 ```
 After doing so, provide the contents of the public key (`id_rsa.pub`) file to the module's `public_key` var.
 The ssh private key should remain private.
