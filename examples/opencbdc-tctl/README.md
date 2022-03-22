@@ -13,8 +13,12 @@ $ terraform init
 $ terraform plan
 $ terraform apply
 ```
-Note that this will create resources in your AWS account which will cost money.
-Be sure to run terraform destroy when you don't need these resources.
+<br>**WARNING** This will create resources in your AWS account which will cost money.
+Be sure to run `terraform destroy` when you don't need these resources.
+<br>**WARNING** Running Terraform commands within this example configuration will create several files locally.
+*Do not* edit or delete these files until you have torn down the environment via `terraform destroy`.
+Terraform uses these files to keep track of resources within your environment.
+Tampering them can put your enviornment in an inconsistent state.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
