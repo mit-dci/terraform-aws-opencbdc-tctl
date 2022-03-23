@@ -156,6 +156,7 @@ module "instance_profile_role" {
   custom_role_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
     "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy",
+    "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
     module.agent_outputs_iam_policy.arn
   ]
 

@@ -173,7 +173,6 @@ variable "agent_instance_types" {
 variable "environment" {
   type        = string
   description = "AWS tag to indicate environment name of each infrastructure object."
-  default     = "dev"
 }
 variable "resource_tags" {
   type        = map(string)

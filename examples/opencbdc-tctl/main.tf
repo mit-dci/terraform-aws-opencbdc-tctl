@@ -3,6 +3,7 @@ module "opencbdc_tctl" {
   source = "../../"
   
   base_domain                                       = var.base_domain
+  environment                                       = var.environment
   public_key                                        = var.public_key
   test_controller_launch_type                       = "EC2"
   test_controller_cpu                               = "10240"

@@ -22,7 +22,7 @@ This module requires you provide an ssh public key which will be used to generat
 
 ***New Domain -*** Currently, the test controller requires that you own a domain with a registrar and a hosted zone configured in Route53. The name of the hosted zone should be set as the `base_domain` var and the necessary DNS records will be created by this Terraform module. If you don't currently own a domain, you can purchase one via the Route53 registrar, doing so creates a hosted zone in Route53 automatically. This is our recommended approach.
 
-***BYO Domain -*** If you already own a domain that you wish to use you can do so, however you'll still need to create a hosted zone in Route53. To do this, set the flag create_hosted_zone to true. The module output route53_name_servers will provide a list of name servers associated with the hosted zone.
+***BYO Domain -*** If you already own a domain that you wish to use you can do so, however you'll still need to create a hosted zone in Route53. To do this, set the flag create_hosted_zone to true. The module output `route53_endpoints.name_servers` will provide a list of name servers associated with the hosted zone.
 Use these to delegate DNS resolution for the domain to route53. For BYO domains, we recommend using a sub-domain (test.foo.com) as base_domain rather than using a top level domain (foo.com) and delegating name server resolution to route53 for that subdomain.
 
 ## Github Auth
@@ -63,7 +63,7 @@ Both the test controller's UI and API exist inside of a single ECS task. The tas
 
 # Accessing the Test Controller
 
-The module will generate some DNS records in [AWS Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html) for you. A CNAME record is created in Route53 which will point to the UI load balancer. The format of this will be `test-controller.<environment>.<base_domain>`. The `environment` and `base_domain` values will be set to whatever you configured to the corresponding Terraform vars. Assuming your environment is up and configured properly, you should be able to access by typing the url into any browser.
+The module will generate some DNS records in [AWS Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html) for you. A CNAME record is created in Route53 which will point to the UI load balancer. The format of this will be `test-controller.<environment>.<base_domain>`. The `environment` and `base_domain` values will be set to whatever you configured to the corresponding Terraform vars. Assuming your environment is up and configured properly, you should be able to access by typing the url into any browser. The appropriate record is also provided as an output `route53_endpoints.ui_endpoint`.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -136,7 +136,7 @@ The module will generate some DNS records in [AWS Route53](https://docs.aws.amaz
 | <a name="input_create_certbot_lambda"></a> [create\_certbot\_lambda](#input\_create\_certbot\_lambda) | Boolean to create the certbot lambda to update the letsencrypt cert for the test controller. | `bool` | `true` | no |
 | <a name="input_create_hosted_zone"></a> [create\_hosted\_zone](#input\_create\_hosted\_zone) | Flag to create hosted zone in Route53, set to true if domain is registerd outside of Route53 | `bool` | `false` | no |
 | <a name="input_create_uhs_seed_generator"></a> [create\_uhs\_seed\_generator](#input\_create\_uhs\_seed\_generator) | Determines whether or not to create uhs seed generator resources | `bool` | `true` | no |
-| <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | `"dev"` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | n/a | yes |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | n/a | yes |
 | <a name="input_private_subnet_tags"></a> [private\_subnet\_tags](#input\_private\_subnet\_tags) | Tags associated with private subnets | `map(string)` | `{}` | no |
 | <a name="input_public_key"></a> [public\_key](#input\_public\_key) | SSH public key to use in EC2 instances. | `string` | `""` | no |
@@ -179,7 +179,7 @@ The module will generate some DNS records in [AWS Route53](https://docs.aws.amaz
 | <a name="output_public_subnets_use1"></a> [public\_subnets\_use1](#output\_public\_subnets\_use1) | Public subnet Ids associated with VPC in us-east-1 region |
 | <a name="output_public_subnets_use2"></a> [public\_subnets\_use2](#output\_public\_subnets\_use2) | Public subnet Ids associated with VPC in us-east-2 region |
 | <a name="output_public_subnets_usw2"></a> [public\_subnets\_usw2](#output\_public\_subnets\_usw2) | Public subnet Ids associated with VPC in us-west-2 region |
-| <a name="output_route53_name_servers"></a> [route53\_name\_servers](#output\_route53\_name\_servers) | Name servers asscoiated with Route53 hosted zone |
+| <a name="output_route53_endpoints"></a> [route53\_endpoints](#output\_route53\_endpoints) | Route53 endpoints generated by test controller services |
 | <a name="output_s3_vpc_interface_endpoint_use1"></a> [s3\_vpc\_interface\_endpoint\_use1](#output\_s3\_vpc\_interface\_endpoint\_use1) | S3 service interface endpoint asscoiated with VPC in us-east-1 region |
 | <a name="output_s3_vpc_interface_endpoint_use2"></a> [s3\_vpc\_interface\_endpoint\_use2](#output\_s3\_vpc\_interface\_endpoint\_use2) | S3 service interface endpoint asscoiated with VPC in us-east-2 region |
 | <a name="output_s3_vpc_interface_endpoint_usw2"></a> [s3\_vpc\_interface\_endpoint\_usw2](#output\_s3\_vpc\_interface\_endpoint\_usw2) | S3 service interface endpoint asscoiated with VPC in us-west-2 region |

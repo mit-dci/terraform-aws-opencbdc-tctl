@@ -1,3 +1,8 @@
+output "ui_endpoint" {
+  value = aws_route53_record.ui_nlb.fqdn
+  description = "The test controller endpoint where users can connect to the UI"
+}
+
 output "agent_endpoint" {
   value       = aws_route53_record.nlb.fqdn
   description = "The test controller endpoint where agents create TCP connections"
