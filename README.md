@@ -166,6 +166,17 @@ The process for this is documented in the test controller's [README](https://git
 <br />**Note -** This module configures the port 8443 to route to the auth endpoint via the network load balancer.
 This means the port must be specified in the url you enter into the browser `https://test-controller.<base_domain>:8443/auth`.
 
+## Request Limit Increases (Optional)
+Some plots shown in the paper require a great deal of compute power to reproduce.
+The default quotas for EC2 instances set on AWS accounts will likely be insufficient in some cases.
+The test controller will schedule instances using available vCPUs based on the service quota API, meaning it will run what it can instead of reporting errors.
+To reproduce entire plots, you will need to [submit requests](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html#request-increase) limit increases on several EC2 service quotas.
+Specifically:
+| Quota Name | us-east-1 | us-east-2 | us-west-2 |
+|-------|-----------|-----------|-----------|
+| All Standard (A, C, D, H, I, M, R, T, Z) Spot Instance Requests | 32,000 | 32,000 | 32,000 |
+| Running On-Demand Standard (A, C, D, H, I, M, R, T, Z) instances | 32,000 | 32,000 | 32,000 |
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
