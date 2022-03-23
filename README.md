@@ -91,8 +91,13 @@ After creating this, you can provide it to the module via the `test_controller_g
 
 ## Configure IAM Permissions
 
-`terraform apply` can be executed with [Administrator Access](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html#jf_administrator) permissions.
+Terraform will require permission to access multiple services in AWS.
+Permissions in AWS are managed via the [IAM service](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html).
+Generally speaking you want to provide the smallest set of permissions possible to a role.
+This is known as the Principle of Least Privilege.
+Since Terraform here will be interacting with such a wide array of services to deploy the test controller, for simplicity you can grant [Administrator Access](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html#jf_administrator).
 This can be attached to an [IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) that Terraform can [authenticate against](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication).
+If you'd like to restrict Terraform's access with a fine toothed comb however you certainly can.
 
 # Provision
 
