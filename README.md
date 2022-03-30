@@ -80,7 +80,7 @@ Use these to delegate DNS resolution for the domain to Route53.
 Usually this is done by creating an NS record wherever the base domain is hosted.
 For BYO domains, we recommend using a sub-domain (test.foo.com) as base_domain rather than using a top level domain (foo.com) and delegating name server resolution to route53 for that subdomain.
 This module will create several certificates in AWS Certificate Manager which use DNS for validation.
-Be sure that your base domain is updated before you run apply or elqse the certificates will fail to validate.
+Be sure that your base domain is updated before you run `terraform apply` or else the certificates will fail to validate.
 
 ## Generate and Add a Github Access Token
 
