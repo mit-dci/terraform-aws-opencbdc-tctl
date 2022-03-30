@@ -63,7 +63,6 @@ $ sudo apt-get install openssh-client
 * On RHEL/Centos/Fedora:
 ```console
 $ sudo yum -y install openssh-clients
-
 ```
 After doing so, provide the contents of the public key (`id_rsa.pub`) file to the module's `public_key` var.
 The ssh private key should remain private.
@@ -178,7 +177,6 @@ Specifically:
 |-------|-----------|-----------|-----------|
 | All Standard (A, C, D, H, I, M, R, T, Z) Spot Instance Requests | 32,000 | 32,000 | 32,000 |
 | Running On-Demand Standard (A, C, D, H, I, M, R, T, Z) instances | 32,000 | 32,000 | 32,000 |
-
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
