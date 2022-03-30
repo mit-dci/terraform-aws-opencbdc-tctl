@@ -2,7 +2,7 @@
 Configuration in this directory can be used to provision an environment mirroring that used in the paper.
 
 # Usage
-1. Complete the [pre-provisioning steps](../../README.md#Pre-Provisioning).
+1. Complete the [pre-provisioning steps](../../README.md#Pre-Provision).
 Please be sure that you are authenticated with AWS.
 2. Set appropriate values for [inputs](#Inputs).
 These are mainly vars that will be specific to your environment.
