@@ -1,3 +1,9 @@
+variable "environment" {
+  type        = string
+  description = "AWS tag to indicate environment name of each infrastructure object."
+  default     = ""
+}
+
 variable "base_domain" {
   type = string
   description = "Base domain to use for ACM Cert and Route53 record management."

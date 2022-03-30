@@ -42,12 +42,15 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_app_container_base_image"></a> [app\_container\_base\_image](#input\_app\_container\_base\_image) | An optional custom container base image for the test controller and releated services | `string` | n/a | yes |
 | <a name="input_binaries_s3_bucket"></a> [binaries\_s3\_bucket](#input\_binaries\_s3\_bucket) | The S3 bucket where agent binaries should be published by the pipeline | `string` | n/a | yes |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The ECS cluster name | `string` | n/a | yes |
 | <a name="input_github_access_token"></a> [github\_access\_token](#input\_github\_access\_token) | Name of oauth token for github private repo | `string` | n/a | yes |
 | <a name="input_github_repo"></a> [github\_repo](#input\_github\_repo) | The Github repo base name | `string` | n/a | yes |
 | <a name="input_github_repo_branch"></a> [github\_repo\_branch](#input\_github\_repo\_branch) | The Github repo owner | `string` | n/a | yes |
 | <a name="input_github_repo_owner"></a> [github\_repo\_owner](#input\_github\_repo\_owner) | The Github repo owner | `string` | n/a | yes |
+| <a name="input_golang_container_build_image"></a> [golang\_container\_build\_image](#input\_golang\_container\_build\_image) | An optional custom container build image for Golang depencies | `string` | n/a | yes |
+| <a name="input_node_container_build_image"></a> [node\_container\_build\_image](#input\_node\_container\_build\_image) | An optional custom container build image for Nodejs depencies | `string` | n/a | yes |
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | A list of private subnets inside the VPC | `list(string)` | `[]` | no |
 | <a name="input_s3_interface_endpoint"></a> [s3\_interface\_endpoint](#input\_s3\_interface\_endpoint) | DNS record used to route s3 traffic through s3 vpc interface endpoint | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to set for all resources | `map(string)` | `{}` | no |
