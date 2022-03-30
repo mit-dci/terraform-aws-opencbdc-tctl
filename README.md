@@ -103,7 +103,7 @@ If you'd like to restrict Terraform's access with a fine toothed comb however yo
 
 This repo contains Terraform configuration mirroring that of the research paper [here](./examples/opencbdc-tctl).
 This is intended to serve as your main entrypoint for your deployment.
-Deployment instructions are located [here](./examples/opencbdc-tctl/README#Usage).
+Deployment instructions are located [here](./examples/opencbdc-tctl/README.md#Usage).
 If you want to configure the environment for your own tests this module provides a [number of inputs](#Inputs) for doing so.
 
 # Post-Provision
