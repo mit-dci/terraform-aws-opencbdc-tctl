@@ -609,7 +609,6 @@ module "route53_dns" {
   source = "./modules/route53_dns"
 
   dns_base_domain                   = var.base_domain
-  create_hosted_zone                = var.create_hosted_zone
 
   # Tags
   tags = local.tags

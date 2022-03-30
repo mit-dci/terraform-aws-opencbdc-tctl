@@ -4,12 +4,6 @@ variable "base_domain" {
   default = ""
 }
 
-variable "create_hosted_zone" {
-  type = bool
-  description = "Flag to create hosted zone in Route53, set to true if domain is registerd outside of Route53"
-  default = false
-}
-
 #EC2
 variable "public_key" {
   type        = string

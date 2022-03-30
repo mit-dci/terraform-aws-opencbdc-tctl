@@ -1,17 +1,6 @@
 
-# Route53 Zone
-resource "aws_route53_zone" "this" {
-  count = var.create_hosted_zone ? 1 : 0
-
-  name = var.dns_base_domain
-}
-
 data "aws_route53_zone" "base_domain" {
   name = var.dns_base_domain
-
-  depends_on = [
-    aws_route53_zone.this
-  ]
 }
 
 # ACM

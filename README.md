@@ -75,10 +75,12 @@ If you don't currently own a domain, you can purchase one via the Route53 regist
 This is our recommended approach.
 
 ***BYO Domain -*** If you already own a domain that you wish to use you can do so, however you'll still need to [create a hosted zone in Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html).
-To do this, set the flag create_hosted_zone to true.
-The module output route53_name_servers will provide a list of name servers associated with the hosted zone.
-Use these to delegate DNS resolution for the domain to route53.
+The module output `route53_endpoints.name_servers` will provide a list of name servers associated with the hosted zone.
+Use these to delegate DNS resolution for the domain to Route53.
+Usually this is done by creating an NS record wherever the base domain is hosted.
 For BYO domains, we recommend using a sub-domain (test.foo.com) as base_domain rather than using a top level domain (foo.com) and delegating name server resolution to route53 for that subdomain.
+This module will create several certificates in AWS Certificate Manager which use DNS for validation.
+Be sure that your base domain is updated before you run apply or elqse the certificates will fail to validate.
 
 ## Generate and Add a Github Access Token
 
