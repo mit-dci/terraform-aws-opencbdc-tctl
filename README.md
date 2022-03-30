@@ -249,7 +249,6 @@ Specifically:
 | <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base domain to use for ACM Cert and Route53 record management. | `string` | `""` | no |
 | <a name="input_cluster_instance_type"></a> [cluster\_instance\_type](#input\_cluster\_instance\_type) | If test controller launch type is EC2, the instance size to use. | `string` | `"c5ad.12xlarge"` | no |
 | <a name="input_create_certbot_lambda"></a> [create\_certbot\_lambda](#input\_create\_certbot\_lambda) | Boolean to create the certbot lambda to update the letsencrypt cert for the test controller. | `bool` | `true` | no |
-| <a name="input_create_hosted_zone"></a> [create\_hosted\_zone](#input\_create\_hosted\_zone) | Flag to create hosted zone in Route53, set to true if domain is registerd outside of Route53 | `bool` | `false` | no |
 | <a name="input_create_uhs_seed_generator"></a> [create\_uhs\_seed\_generator](#input\_create\_uhs\_seed\_generator) | Determines whether or not to create uhs seed generator resources | `bool` | `true` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | n/a | yes |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | n/a | yes |
