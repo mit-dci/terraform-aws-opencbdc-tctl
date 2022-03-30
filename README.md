@@ -1,69 +1,184 @@
 # Introduction
 
-This repository provides IaC (Infrastructure as Code) to replicate the environment used to produce the results of the [research paper](https://dci.mit.edu/opencbdc) and can serve as a starting point if you're looking to do so. All the necessary resources are created in [Amazon Web Services (AWS)](https://aws.amazon.com) cloud infrastructure via [Terraform](https://www.terraform.io/). The Terraform configuration is wrapped into a single [module](https://www.terraform.io/language/modules) that leverages a number of sub-modules. The root module primarily deploys the [OpenCBDC test controller](https://github.com/mit-dci/opencbdc-tctl) along numerous supporting resources. 
+This repository provides IaC (Infrastructure as Code) to replicate the environment used to produce the results of the [research paper](https://dci.mit.edu/opencbdc) and can serve as a starting point if you're looking to do so.
+All the necessary resources are created in [Amazon Web Services (AWS)](https://aws.amazon.com) cloud infrastructure via [Terraform](https://www.terraform.io/).
+The Terraform configuration is wrapped into a single [module](https://www.terraform.io/language/modules) that leverages a number of sub-modules.
+The root module primarily deploys the [OpenCBDC test controller](https://github.com/mit-dci/opencbdc-tctl) along with numerous supporting resources.
+You can follow along with the steps of this README in order to deploy the test controller.
+If you are new to Terraform, when you reach [Provision](#Provision), it is reccomended that you use the pre-created configuration linked there as the entrypoint for your deployment.
 
 # Architecture
 
-This module will deploy the test controller via an [AWS ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html) task. The ECS service can be configured to use either EC2 instances or Fargate. The main function of the test controller is to schedule agent processes across one to three regions for testing Project Hamilton's architectures. Agents processes are scheduled on [AWS EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) instances and provisioned via EC2 launch templates. The test controller is configured to provision in the `us-east-1` region. A subset of resources are replicated in the `us-east-2` and `us-west-2` regions in order to schedule multi regional test runs. A VPC is provisioned in each of these three regions along with VPC peering connections and VPC endpoints for internal communication between resources. A pipeline is setup via [AWS Codepipeline](https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html) which will clone the test controller's source code, then build/push several services. These services are a container image for the test controller, a container image used to seed the environment with data for test runs, and the binary used to schedule agents during test runs. Both of the container images are pushed to [AWS ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html) registries, and the agent binary is pushed to an S3 bucket. Seeding initial outputs is handled via an [AWS Batch job](https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html) that when necessary is scheduled by the test controller before a test run. An AWS Batch compute environment, job definition, and job queue are all provisioned by default to support this. Upon being schdeuled, agents instances pull the agent binary from S3, then execute it to communicate with the test controller and recieve instructions. This process for the agents is defined in thier EC2 launch template. Two [AWS Network Load balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html) are deployed by the module. One forwards traffic to the test controller's UI, the other supports communication between agents and the test controller. A bastion host is provided for troubleshooting the environment as well as pulling down raw test data if you wish to gather your own insights. To access to the bastion host you can either use ssh, which is configured by this module, or you can use [AWS Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html).
+This module will deploy the test controller via an [AWS ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html) task.
+The ECS service can be configured to use either EC2 instances or Fargate.
+The main function of the test controller is to schedule agent processes across one to three regions for testing Project Hamilton's architectures.
+Agents processes are scheduled on [AWS EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) instances and provisioned via EC2 launch templates.
+The test controller is configured to provision in the `us-east-1` region.
+A subset of resources are replicated in the `us-east-2` and `us-west-2` regions in order to schedule multi regional test runs.
+A VPC is provisioned in each of these three regions along with VPC peering connections and VPC endpoints for internal communication between resources.
+A pipeline is setup via [AWS Codepipeline](https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html) which will clone the test controller's source code, then build/push several services.
+These services are a container image for the test controller, a container image used to seed the environment with data for test runs, and the binary used to schedule agents during test runs.
+Both of the container images are pushed to [AWS ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html) registries, and the agent binary is pushed to an S3 bucket.
+Seeding initial outputs is handled via an [AWS Batch job](https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html) that when necessary is scheduled by the test controller before a test run.
+An AWS Batch compute environment, job definition, and job queue are all provisioned by default to support this.
+Upon being schdeuled, agents instances pull the agent binary from S3, then execute it to communicate with the test controller and recieve instructions.
+This process for the agents is defined in thier EC2 launch template.
+Two [AWS Network Load balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html) are deployed by the module.
+One forwards traffic to the test controller's UI, the other supports communication between agents and the test controller.
+A bastion host is provided for troubleshooting the environment as well as pulling down raw test data if you wish to gather your own insights.
+To access to the bastion host you can either use ssh, which is configured by this module, or you can use [AWS Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html).
 
 ![Diagram](docs/architecture-diagram.png)
 
 # Required Software
 
-The module requires that you have [Terraform installed](https://learn.hashicorp.com/tutorials/terraform/install-cli). Specifics about versioning are listed [here](##Requirements). Also useful, but not completely necessary is the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html). If you have other Terraform projects with different version requirements, you can manage them with [tfenv](https://github.com/tfutils/tfenv). This project is pre-configured to pull the proper terraofrm version via tfenv. Simply run `tfenv install`.
+The module requires that you have [Terraform installed](https://learn.hashicorp.com/tutorials/terraform/install-cli).
+Specifics about versioning are listed [here](#Requirements).
+Also useful, but not completely necessary is the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+If you have other Terraform projects with different version requirements, you can manage them with [tfenv](https://github.com/tfutils/tfenv).
+This project is pre-configured to pull the proper terraform version via tfenv.
+Simply run `tfenv install`.
+Docker must be [installed and running](https://docs.docker.com/engine/install/) on your local machine.
+You won't need to run any Docker commands, just be sure that it's running.
+If you're unfamiliar with Docker and curious, you can take a look at their [getting started page](https://docs.docker.com/get-started/).
 
-# Pre-Provisioning
+# Pre-Provision
 
-## SSH Public Key
+## Generate and Add an SSH Key
 
-This module requires you provide an ssh public key which will be used to generate an [Amazon EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html). The key pair can be created using a [third party tool](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#how-to-generate-your-own-key-and-import-it-to-aws). After doing so, provide the contents of the public key file to the module's `public_key` var.
+This module requires you provide an ssh public key which will be used to generate an [Amazon EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html).
+AWS can use either ED25519 or 2048-bit SSH-2 RSA keys.
+There are a number of third party tools that can be used to generate an approrpiate keypair.
+One way is via the `ssh-keygen` command provided by [OpenSSH](https://www.openssh.com/).
+```console
+$ ssh-keygen -t RSA -f /path/to/key/file/id_rsa
+``` 
+Installation for OpenSSH will depend on the OS of your machine.
+* On MacOS OpenSSH should be installed by default.
+* On [Windows](https://ubuntu.com/tutorials/ssh-keygen-on-windows#1-overview) you may need to follow addional steps.
+* On Ubuntu/Debian/Linux Mint:
+```console
+$ sudo apt-get install openssh-client
+``` 
+* On RHEL/Centos/Fedora:
+```console
+$ sudo yum -y install openssh-clients
 
-## Domain Registration
-
-***New Domain -*** Currently, the test controller requires that you own a domain with a registrar and a hosted zone configured in Route53. The name of the hosted zone should be set as the `base_domain` var and the necessary DNS records will be created by this Terraform module. If you don't currently own a domain, you can purchase one via the Route53 registrar, doing so creates a hosted zone in Route53 automatically. This is our recommended approach.
-
-***BYO Domain -*** If you already own a domain that you wish to use you can do so, however you'll still need to create a hosted zone in Route53. To do this, set the flag create_hosted_zone to true. The module output `route53_endpoints.name_servers` will provide a list of name servers associated with the hosted zone.
-Use these to delegate DNS resolution for the domain to route53. For BYO domains, we recommend using a sub-domain (test.foo.com) as base_domain rather than using a top level domain (foo.com) and delegating name server resolution to route53 for that subdomain.
-
-## Github Auth
-
-Once deployed, this module will create a pipeline in AWS Codepipeline, which builds and pushes several container images related to the test controller. In order to perform this Codepipeline will clone the test controller codebase. Codepipeline must be connected to a Github account to clone from a Github repo. A [personal access token](https://docs.github.com/en/enterprise/2.17/user/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) should be passed to codepipeline for authentication. After creating this, you can provide it to the module via `test_controller_github_access_token` var.
-
-## IAM Permissions
-
-`terraform apply` can be executed with [Administrator Access](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html#jf_administrator) permissions. This can be attached to an [IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) that Terraform can [authenticate against](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication).
-
-# Provisioning
-
-This repo contains Terraform configuration mirroring that of the research paper [here](./examples/research-paper-env). This is intended to serve as your main entrypoint for your deployment. Deployment instructions are located [here](./examples/research-paper-env/README#Usage). If you want to configure the environment for your own tests this module provides a [number of inputs](#Inputs) for doing so.
-
-# Post-Provisioning
-
-## Certbot Lambda
-
-The test controller requires an SSL certificate to allow for client connections via HTTPS. This module will provision a Lambda capable of generating an appropriate cert issued via [Let's Encrypt](https://letsencrypt.org/). The lambda is configured to fire off every twelve hours to check that the cert has yet to expire. If you wish to run tests in your environment immediately provisioning, you will need to invoke the lambda yourself. You do this via the AWS CLI. Using the credentials you configured for your environment, run:
 ```
-aws lambda invoke --function-name test-controller-certbot-lambda /dev/stdout
-```
-*Note* The lambda usually takes a few minutes to complete it's execution.
-*Note* The lambda will create a certificate in [AWS Certificate Manager](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html). This is not tied to the terraform automation, so you will need to delete it manually. To so, simply select the certificate with the test controller domain name `test-controller.<base_domain>` and hit "delete".
+After doing so, provide the contents of the public key (`id_rsa.pub`) file to the module's `public_key` var.
+The ssh private key should remain private.
 
-## Codepipeline
-The test controller pipeline should run automatically. All pipeline phases must succeed before you can run any tests. You can verify this by checking the most recent execution status of `test-controller-pipeline` in the AWS Codepipeline service.
+## Register a Domain
+
+***New Domain -*** Currently, the test controller requires that you own a domain with a registrar and a hosted zone configured in Route53.
+The name of the hosted zone should be set as the `base_domain` var and the necessary DNS records will be created by this Terraform module.
+If you don't currently own a domain, you can purchase one via the Route53 registrar, doing so creates a hosted zone in Route53 automatically.
+This is our recommended approach.
+
+***BYO Domain -*** If you already own a domain that you wish to use you can do so, however you'll still need to [create a hosted zone in Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html).
+To do this, set the flag create_hosted_zone to true.
+The module output route53_name_servers will provide a list of name servers associated with the hosted zone.
+Use these to delegate DNS resolution for the domain to route53.
+For BYO domains, we recommend using a sub-domain (test.foo.com) as base_domain rather than using a top level domain (foo.com) and delegating name server resolution to route53 for that subdomain.
+
+## Generate and Add a Github Access Token
+
+Once deployed, this module will create a pipeline in AWS Codepipeline, which builds and pushes several container images related to the test controller.
+In order to perform this Codepipeline will clone the test controller codebase.
+Codepipeline must be connected to a Github account to clone from a Github repo.
+A [personal access token](https://docs.github.com/en/enterprise/2.17/user/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) should be passed to codepipeline for authentication.
+The token should only need the `public_repo` permission.
+After creating this, you can provide it to the module via the `test_controller_github_access_token` var.
+
+## Configure IAM Permissions
+
+Terraform will require permission to access multiple services in AWS.
+Permissions in AWS are managed via the [IAM service](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html).
+Generally speaking you want to provide the smallest set of permissions possible to a role.
+This is known as the Principle of Least Privilege.
+Since Terraform here will be interacting with such a wide array of services to deploy the test controller, for simplicity you can grant [Administrator Access](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html#jf_administrator).
+This can be attached to an [IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) that Terraform can [authenticate against](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication).
+If you'd like to restrict Terraform's access with a fine toothed comb however you certainly can.
+
+# Provision
+
+This repo contains Terraform configuration mirroring that of the research paper [here](./examples/opencbdc-tctl).
+This is intended to serve as your main entrypoint for your deployment.
+Deployment instructions are located [here](./examples/opencbdc-tctl/README.md#Usage).
+If you want to configure the environment for your own tests this module provides a [number of inputs](#Inputs) for doing so.
+
+# Post-Provision
+
+## Invoke the Certbot Lambda
+
+The test controller requires an SSL certificate to allow for client connections via HTTPS.
+This module will provision a Lambda capable of generating an appropriate cert issued via [Let's Encrypt](https://letsencrypt.org/).
+The lambda is configured to fire off every twelve hours to check that the cert has yet to expire.
+If you wish to run tests in your environment immediately provisioning, you will need to invoke the lambda yourself.
+You do this via the AWS CLI.
+Using the credentials you configured for your environment, run:
+```console
+$ aws lambda invoke --region us-east-1 --function-name test-controller-certbot-lambda /dev/stdout
+```
+<br />**Note -** The lambda usually takes a few minutes to complete it's execution.
+<br />**Note -** The lambda will create a certificate in [AWS Certificate Manager](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html).
+This is not tied to the terraform automation, so you will need to delete it manually after running a `terraform destroy`.
+You should delete it only after you've destroyed everything else.
+To do so, simply select the certificate with the test controller domain name `test-controller.<base_domain>` and hit "delete".
+
+## Monitor Codepipeline
+The test controller pipeline should run automatically.
+All pipeline phases must succeed before you can run any tests.
+You can verify this by checking the most recent execution status of `test-controller-pipeline` in the AWS Codepipeline service.
 
 ![Diagram](docs/codepipeline-success.png)
 
-## Health Checks
+Codepipeline will poll for the latest changes to the test controller repo.
+This way you will recieve updates automatically without any manual intervention.
+Occasionally, Codepipeline may fail during the deployment process.
+These are usually transient errors which will resolve by simply running the pipeline again.
+Using the credentials you configured for your environment, run:
+```console
+$ aws lambda invoke --region us-east-1 --function-name test-controller-certbot-lambda /dev/stdout
+```
 
-Both the test controller's UI and API exist inside of a single ECS task. The task must be running and healthy before you can schedule test runs in your environment. Three sets of target groups are configured against the task, one as an entrypoint for agents, one for authentication, and one for the test controller's UI. The task will be scheduled under the `test-controller` service, which belongs to a cluster with the same name as whatever the Terraform var `environment` is set to. It's easiest to verify these in the AWS console. When the environment is healthy, these services should look like the following:
+## Monitor Health Checks
+
+Both the test controller's UI and API exist inside of a single ECS task.
+The task must be running and healthy before you can schedule test runs in your environment.
+Three sets of target groups are configured against the task, one as an entrypoint for agents, one for authentication, and one for the test controller's UI.
+The task will be scheduled under the `test-controller` service, which belongs to a cluster with the same name as whatever the Terraform var `environment` is set to.
+It's easiest to verify these in the AWS console.
+When the environment is healthy, these services should look like the following:
 
 ![Running ECS Task](docs/ecs-running-task.png)
 
 ![Healthy Target Group](docs/ecs-running-task.png)
 
-# Accessing the Test Controller
+## Access the Test Controller
 
-The module will generate some DNS records in [AWS Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html) for you. A CNAME record is created in Route53 which will point to the UI load balancer. The format of this will be `test-controller.<environment>.<base_domain>`. The `environment` and `base_domain` values will be set to whatever you configured to the corresponding Terraform vars. Assuming your environment is up and configured properly, you should be able to access by typing the url into any browser. The appropriate record is also provided as an output `route53_endpoints.ui_endpoint`.
+The module will generate some DNS records in [AWS Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html) for you.
+A CNAME record is created in Route53 which will point to the UI load balancer.
+The format of this will be `test-controller.<base_domain>`.
+The `environment` and `base_domain` values will be set to whatever you configured to the corresponding Terraform vars.
+Assuming your environment is up and configured properly, you should be able to access by typing the url into any browser.
+In a fresh environment, you will need to add a client certificate into the environment in order to authenticate with the test controller.
+The process for this is documented in the test controller's [README](https://github.com/mit-dci/opencbdc-tctl#authentication).
+<br />**Note -** This module configures the port 8443 to route to the auth endpoint via the network load balancer.
+This means the port must be specified in the url you enter into the browser `https://test-controller.<base_domain>:8443/auth`.
+The appropriate record is also provided as an output `route53_endpoints.ui_endpoint`.
+
+## Request Limit Increases (Optional)
+Some plots shown in the paper require a great deal of compute power to reproduce.
+The default quotas for EC2 instances set on AWS accounts will likely be insufficient in some cases.
+The test controller will schedule instances using available vCPUs based on the service quota API, meaning it will run what it can instead of reporting errors.
+To reproduce entire plots, you will need to [submit requests](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html#request-increase) limit increases on several EC2 service quotas.
+Specifically:
+| Quota Name | us-east-1 | us-east-2 | us-west-2 |
+|-------|-----------|-----------|-----------|
+| All Standard (A, C, D, H, I, M, R, T, Z) Spot Instance Requests | 32,000 | 32,000 | 32,000 |
+| Running On-Demand Standard (A, C, D, H, I, M, R, T, Z) instances | 32,000 | 32,000 | 32,000 |
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
