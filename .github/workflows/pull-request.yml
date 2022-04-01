@@ -1,0 +1,58 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches:
+      - trunk
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      AWS_DEFAULT_REGION: us-east-1
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Terraform
+      run: |
+        brew update
+        brew install tfenv
+        tfenv install
+
+    - name: Get Versions
+      run: |
+        terraform --version
+
+    - name: Terraform Init
+      run: terraform init -input=false -backend=false
+
+    - name: Validate Terraform configs
+      run: terraform validate
+
+    - name: Check Terraform config formatting
+      run: terraform fmt -write=false -recursive
+
+  docs:
+    needs: validate
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        include:
+          - working-dir: "."
+            recursive: true
+          - working-dir: "examples/opencbdc-tctl"
+            recursive: false
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+
+    - name: Render terraform docs and push changes back to PR
+      uses: terraform-docs/gh-actions@main
+      with:
+        working-dir: ${{ matrix.working-dir }}
+        output-file: README.md
+        output-method: inject
+        git-push: true
+        recursive: ${{ matrix.recursive }}
