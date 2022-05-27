@@ -50,6 +50,7 @@ No requirements.
 | <a name="input_github_repo_branch"></a> [github\_repo\_branch](#input\_github\_repo\_branch) | The Github repo owner | `string` | n/a | yes |
 | <a name="input_github_repo_owner"></a> [github\_repo\_owner](#input\_github\_repo\_owner) | The Github repo owner | `string` | n/a | yes |
 | <a name="input_golang_container_build_image"></a> [golang\_container\_build\_image](#input\_golang\_container\_build\_image) | An optional custom container build image for Golang depencies | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Name suffix associated with resources | `string` | n/a | yes |
 | <a name="input_node_container_build_image"></a> [node\_container\_build\_image](#input\_node\_container\_build\_image) | An optional custom container build image for Nodejs depencies | `string` | n/a | yes |
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | A list of private subnets inside the VPC | `list(string)` | `[]` | no |
 | <a name="input_s3_interface_endpoint"></a> [s3\_interface\_endpoint](#input\_s3\_interface\_endpoint) | DNS record used to route s3 traffic through s3 vpc interface endpoint | `string` | `""` | no |

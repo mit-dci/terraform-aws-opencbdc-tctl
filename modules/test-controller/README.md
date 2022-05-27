@@ -79,6 +79,7 @@ No requirements.
 | <a name="input_launch_type"></a> [launch\_type](#input\_launch\_type) | The ECS task launch type | `string` | n/a | yes |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | n/a | yes |
 | <a name="input_memory"></a> [memory](#input\_memory) | The ECS task memory | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Name suffix associated with resources | `string` | n/a | yes |
 | <a name="input_outputs_s3_bucket"></a> [outputs\_s3\_bucket](#input\_outputs\_s3\_bucket) | The S3 bucket where test result outputs are stored. | `string` | n/a | yes |
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | A list of private subnets inside the VPC | `list(string)` | `[]` | no |
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | A list of public subnets inside the VPC | `list(string)` | `[]` | no |

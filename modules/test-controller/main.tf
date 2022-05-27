@@ -1,5 +1,5 @@
 locals {
-  name            = "test-controller"
+  name            = var.name
   agent_port      = "8081"
   ui_port         = "443"
   ui_port_wo_cert = "8443"
@@ -119,7 +119,7 @@ module "nlb" {
 # Create CNAMES for load balancers
 resource "aws_route53_record" "ui_nlb" {
   zone_id = var.hosted_zone_id
-  name    = "${local.name}.${var.dns_base_domain}"
+  name    = "test-controller.${var.dns_base_domain}"
   type    = "CNAME"
   ttl     = "5"
   records = [ module.ui_nlb.this_lb_dns_name ]
@@ -128,7 +128,7 @@ resource "aws_route53_record" "ui_nlb" {
 # Create CNAMES for load balancers
 resource "aws_route53_record" "nlb" {
   zone_id = var.hosted_zone_id
-  name    = "${local.name}-agents.${var.dns_base_domain}"
+  name    = "test-controller-agents.${var.dns_base_domain}"
   type    = "CNAME"
   ttl     = "5"
   records = [ module.nlb.this_lb_dns_name ]
@@ -198,7 +198,7 @@ module "task_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.1.0"
 
-  name   = "ecs-task-sg"
+  name   = "${local.name}-ecs-task-sg"
   vpc_id = var.vpc_id
 
   # Allow all incoming traffic from within VPC
@@ -527,7 +527,7 @@ module "efs_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.1.0"
 
-  name   = "efs-sg"
+  name   = "${local.name}-efs-sg"
   vpc_id = var.vpc_id
 
   # Allow NFS/EFS incoming traffic from within VPC
@@ -542,7 +542,7 @@ module "efs_security_group" {
 }
 
 resource "aws_efs_file_system" "certs" {
-  creation_token = "certs"
+  creation_token = "${local.name}-certs"
   encrypted = true
 
   tags = merge(
@@ -562,7 +562,7 @@ resource "aws_efs_backup_policy" "certs_backup_policy" {
 }
 
 resource "aws_efs_file_system" "testruns" {
-  creation_token = "testruns"
+  creation_token = "${local.name}-testruns"
   encrypted = true
 
   lifecycle_policy {
@@ -586,7 +586,7 @@ resource "aws_efs_backup_policy" "testruns_backup_policy" {
 }
 
 resource "aws_efs_file_system" "binaries" {
-  creation_token = "binaries"
+  creation_token = "${local.name}-binaries"
   encrypted = true
 
   tags = merge(
@@ -671,7 +671,7 @@ module "certbot_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.1.0"
 
-  name   = "certbot-sg"
+  name   = "${local.name}-certbot-sg"
   vpc_id = var.vpc_id
 
   # Allow all outgoing traffic
