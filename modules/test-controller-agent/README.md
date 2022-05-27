@@ -16,7 +16,7 @@ No requirements.
 |------|--------|---------|
 | <a name="module_agent_outputs_iam_policy"></a> [agent\_outputs\_iam\_policy](#module\_agent\_outputs\_iam\_policy) | terraform-aws-modules/iam/aws//modules/iam-policy | ~> 3.0 |
 | <a name="module_agent_security_group"></a> [agent\_security\_group](#module\_agent\_security\_group) | terraform-aws-modules/security-group/aws | 3.1.0 |
-| <a name="module_instance_profile_role"></a> [instance\_profile\_role](#module\_instance\_profile\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | ~> 2.17.0 |
+| <a name="module_instance_profile_role"></a> [instance\_profile\_role](#module\_instance\_profile\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | ~> 5 |
 
 ## Resources
 
@@ -41,6 +41,7 @@ No requirements.
 | <a name="input_controller_port"></a> [controller\_port](#input\_controller\_port) | The test controller endpoint port where agents phone home. | `string` | n/a | yes |
 | <a name="input_instance_types"></a> [instance\_types](#input\_instance\_types) | The instance types used in agent launch templates. | `list(string)` | n/a | yes |
 | <a name="input_log_group"></a> [log\_group](#input\_log\_group) | The Cloudwatch log group to use in the cloudwatch agent config. | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Name suffix associated with resources | `string` | n/a | yes |
 | <a name="input_outputs_s3_bucket"></a> [outputs\_s3\_bucket](#input\_outputs\_s3\_bucket) | The S3 bucket where outputs are saved. | `string` | n/a | yes |
 | <a name="input_outputs_s3_bucket_arn"></a> [outputs\_s3\_bucket\_arn](#input\_outputs\_s3\_bucket\_arn) | The S3 bucket arn where outputs are saved. | `string` | n/a | yes |
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | A list of private subnets inside the VPC | `list(string)` | `[]` | no |

@@ -44,9 +44,9 @@ No resources.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base domain to use for ACM Cert and Route53 record management. | `string` | `""` | no |
+| <a name="input_ec2_public_key"></a> [ec2\_public\_key](#input\_ec2\_public\_key) | SSH public key to use in EC2 instances. | `string` | `""` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | `""` | no |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | `""` | no |
-| <a name="input_public_key"></a> [public\_key](#input\_public\_key) | SSH public key to use in EC2 instances. | `string` | `""` | no |
 | <a name="input_test_controller_github_access_token"></a> [test\_controller\_github\_access\_token](#input\_test\_controller\_github\_access\_token) | Access token for cloning test controller repo | `string` | `""` | no |
 
 ## Outputs

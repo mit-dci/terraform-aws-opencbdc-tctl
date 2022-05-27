@@ -1,5 +1,5 @@
 locals {
-  name                   = "bastion"
+  name                   = "${var.name}-bastion"
   certs_mount_path       = "/opt/efs-mounts/certs"
   testruns_mount_path    = "/opt/efs-mounts/testruns"
   binaries_mount_path    = "/opt/efs-mounts/binaries"
@@ -33,7 +33,7 @@ module "security_group" {
 # EC2 Instance Profile
 module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
-  version = "~> 2.17.0"
+  version = "~> 5"
 
   role_name               = "${local.name}-role-${data.aws_region.current.name}"
   create_role             = true
@@ -128,7 +128,7 @@ module "asg" {
   security_groups              = [module.security_group.this_security_group_id]
   associate_public_ip_address  = true
   recreate_asg_when_lc_changes = true
-  iam_instance_profile         = module.instance_profile_role.this_iam_instance_profile_name
+  iam_instance_profile         = module.instance_profile_role.iam_instance_profile_name
   key_name                     = aws_key_pair.bastion.id
 
   user_data = data.template_cloudinit_config.config.rendered

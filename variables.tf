@@ -1,3 +1,9 @@
+variable "name" {
+  type = string
+  default = "opencbdc-tctl"
+  description = "Name suffix associated with resources"
+}
+
 variable "base_domain" {
   type        = string
   description = "Base domain to use for ACM Cert and Route53 record management."
@@ -5,7 +11,7 @@ variable "base_domain" {
 }
 
 #EC2
-variable "public_key" {
+variable "ec2_public_key" {
   type        = string
   description = "SSH public key to use in EC2 instances."
   default     = ""

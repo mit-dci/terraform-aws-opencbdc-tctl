@@ -10,7 +10,7 @@ variable "base_domain" {
   default = ""
 }
 
-variable "public_key" {
+variable "ec2_public_key" {
   type = string
   description = "SSH public key to use in EC2 instances."
   default = ""
