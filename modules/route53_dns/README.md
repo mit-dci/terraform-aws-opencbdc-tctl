@@ -1,4 +1,4 @@
-<!-- BEGIN_TF_DOCS -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 No requirements.
@@ -36,4 +36,4 @@ No modules.
 | <a name="output_cert_arn"></a> [cert\_arn](#output\_cert\_arn) | The ACM cert ARN |
 | <a name="output_hosted_zone_id"></a> [hosted\_zone\_id](#output\_hosted\_zone\_id) | Route53 hosted zone id of the base domain |
 | <a name="output_name_servers"></a> [name\_servers](#output\_name\_servers) | Name servers associated with Route53 base domain |
-<!-- END_TF_DOCS -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

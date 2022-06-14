@@ -1,4 +1,4 @@
-<!-- BEGIN_TF_DOCS -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 No requirements.
@@ -106,4 +106,4 @@ No requirements.
 | <a name="output_testruns_efs_ap_arn"></a> [testruns\_efs\_ap\_arn](#output\_testruns\_efs\_ap\_arn) | The EFS ARN for the testruns access point. |
 | <a name="output_testruns_efs_id"></a> [testruns\_efs\_id](#output\_testruns\_efs\_id) | The EFS ID for the testruns volume. |
 | <a name="output_ui_endpoint"></a> [ui\_endpoint](#output\_ui\_endpoint) | The test controller endpoint where users can connect to the UI |
-<!-- END_TF_DOCS -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

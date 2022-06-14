@@ -180,7 +180,7 @@ Specifically:
 | All Standard (A, C, D, H, I, M, R, T, Z) Spot Instance Requests | 32,000 | 32,000 | 32,000 |
 | Running On-Demand Standard (A, C, D, H, I, M, R, T, Z) instances | 32,000 | 32,000 | 32,000 |
 
-<!-- BEGIN_TF_DOCS -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
@@ -300,4 +300,4 @@ Specifically:
 | <a name="output_vpc_id_use1"></a> [vpc\_id\_use1](#output\_vpc\_id\_use1) | Id of VPC in us-east-1 region |
 | <a name="output_vpc_id_use2"></a> [vpc\_id\_use2](#output\_vpc\_id\_use2) | Id of VPC in us-east-2 region |
 | <a name="output_vpc_id_usw2"></a> [vpc\_id\_usw2](#output\_vpc\_id\_usw2) | Id of VPC in us-west-2 region |
-<!-- END_TF_DOCS -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

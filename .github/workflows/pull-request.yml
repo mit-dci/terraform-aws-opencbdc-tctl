@@ -32,27 +32,15 @@ jobs:
       run: terraform fmt -write=false -recursive
 
   docs:
-    needs: validate
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
-      matrix:
-        include:
-          - working-dir: "."
-            recursive: true
-          - working-dir: "examples/opencbdc-tctl"
-            recursive: false
-
     steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.pull_request.head.ref }}
+    - uses: actions/checkout@v1
+    - name: Install pre-commit dependencies
+      shell: bash
+      run: |
+        pip install -q pre-commit
+        brew install terraform-docs
 
-    - name: Render terraform docs and push changes back to PR
-      uses: terraform-docs/gh-actions@main
-      with:
-        working-dir: ${{ matrix.working-dir }}
-        output-file: README.md
-        output-method: inject
-        git-push: true
-        recursive: ${{ matrix.recursive }}
+    - name: Execute pre-commit
+      shell: bash
+      run: pre-commit run --all-files --color always --show-diff-on-failure
