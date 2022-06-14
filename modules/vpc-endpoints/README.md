@@ -1,4 +1,4 @@
-<!-- BEGIN_TF_DOCS -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 No requirements.
@@ -37,4 +37,4 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | <a name="output_s3_interface_endpoint"></a> [s3\_interface\_endpoint](#output\_s3\_interface\_endpoint) | DNS must be specified in order to route traffic through to the s3 interface endpoint |
-<!-- END_TF_DOCS -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -1,4 +1,4 @@
-<!-- BEGIN_TF_DOCS -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 No requirements.
@@ -58,4 +58,4 @@ No requirements.
 | <a name="output_job_definiton_arn"></a> [job\_definiton\_arn](#output\_job\_definiton\_arn) | Arn of the uhs\_seed\_generator job definition |
 | <a name="output_job_name"></a> [job\_name](#output\_job\_name) | Name of uhs seed generator job |
 | <a name="output_job_queue_arn"></a> [job\_queue\_arn](#output\_job\_queue\_arn) | Arn of the uhs\_seed\_generator job queue |
-<!-- END_TF_DOCS -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

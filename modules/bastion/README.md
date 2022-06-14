@@ -1,4 +1,4 @@
-<!-- BEGIN_TF_DOCS -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 No requirements.
@@ -49,4 +49,4 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | <a name="output_bastion_enpoint"></a> [bastion\_enpoint](#output\_bastion\_enpoint) | The bastion endpoint where users can access via an ssh connection |
-<!-- END_TF_DOCS -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

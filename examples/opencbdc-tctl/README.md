@@ -20,7 +20,7 @@ Be sure to run `terraform destroy` when you don't need these resources.
 Terraform uses them to keep track of resources within your environment.
 Tampering them can put your enviornment in an inconsistent state.
 
-<!-- BEGIN_TF_DOCS -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 No requirements.
@@ -71,4 +71,4 @@ No resources.
 | <a name="output_vpc_id_use1"></a> [vpc\_id\_use1](#output\_vpc\_id\_use1) | Id of VPC in us-east-1 region |
 | <a name="output_vpc_id_use2"></a> [vpc\_id\_use2](#output\_vpc\_id\_use2) | Id of VPC in us-east-2 region |
 | <a name="output_vpc_id_usw2"></a> [vpc\_id\_usw2](#output\_vpc\_id\_usw2) | Id of VPC in us-west-2 region |
-<!-- END_TF_DOCS -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
