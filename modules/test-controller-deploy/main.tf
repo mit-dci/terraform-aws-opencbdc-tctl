@@ -1,5 +1,5 @@
 locals {
-  name = var.name
+  name = "test-controller"
   tags = var.tags
 }
 

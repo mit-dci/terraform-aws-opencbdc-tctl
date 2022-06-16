@@ -1,5 +1,5 @@
 locals {
-  name                   = "${var.name}-bastion"
+  name                   = "bastion"
   certs_mount_path       = "/opt/efs-mounts/certs"
   testruns_mount_path    = "/opt/efs-mounts/testruns"
   binaries_mount_path    = "/opt/efs-mounts/binaries"

@@ -1,5 +1,5 @@
 locals {
-    name = "${var.name}-uhs_seed_generator"
+    name = "uhs_seed_generator"
 }
 
 data "aws_region" "current" {}
@@ -50,7 +50,7 @@ module "batch_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.1.0"
 
-  name   = "${local.name}-batch-compute"
+  name   = "batch-compute"
   vpc_id = var.vpc_id
 
   # Allow all outgoing traffic
@@ -124,7 +124,7 @@ resource "aws_cloudwatch_log_group" "this" {
 ###########
 # ECS Service Role
 resource "aws_iam_role" "batch_service_role" {
-  name                 = "${local.name}-batch-service"
+  name                 = "batch-service"
   assume_role_policy   = data.aws_iam_policy_document.batch_service_role_policy.json
 
   tags = var.tags
@@ -148,7 +148,7 @@ resource "aws_iam_role_policy_attachment" "batch_service_role" {
 
 # ECS task execution role
 resource "aws_iam_role" "task_execution_role" {
-  name               = "${local.name}-batch_task_execution_role"
+  name               = "batch_task_execution_role"
   assume_role_policy = data.aws_iam_policy_document.task_execution_role.json
 
   tags = var.tags
@@ -175,7 +175,7 @@ data "aws_iam_policy_document" "task_execution_role" {
 }
 
 resource "aws_iam_role" "batch_job_role" {
-  name                 = "${local.name}-transaction_batch_job_role"
+  name                 = "transaction_batch_job_role"
   assume_role_policy   = data.aws_iam_policy_document.batch_job_role_policy.json
   tags = var.tags
 }
@@ -196,7 +196,7 @@ resource "aws_iam_role_policy_attachment" "preseed_bucket_access" {
 }
 
 resource "aws_iam_policy" "preseed_bucket_access" {
-  name   = "${local.name}-preseed_bucket_access"
+  name   = "preseed_bucket_access"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [

@@ -1,7 +1,3 @@
-locals {
-  name = var.name
-}
-
 #################
 ### Endpoints ###
 #################
@@ -75,7 +71,7 @@ module "vpc_endpoint_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.1.0"
 
-  name   = "${local.name}-vpc-endpoint-sg"
+  name   = "vpc-endpoint-sg"
   vpc_id = var.vpc_id
 
   # Allow all within the vpcs

@@ -1,8 +1,3 @@
-variable "name" {
-  description = "Name suffix associated with resources"
-  type        = string
-}
-
 variable "cluster_name" {
   description = "The ECS cluster name"
   type        = string

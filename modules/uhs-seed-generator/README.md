@@ -46,7 +46,6 @@ No requirements.
 | <a name="input_job_memory"></a> [job\_memory](#input\_job\_memory) | Memory required for a seed generator batch job | `string` | n/a | yes |
 | <a name="input_job_vcpu"></a> [job\_vcpu](#input\_job\_vcpu) | Vcpus required for a seed generator batch job | `string` | n/a | yes |
 | <a name="input_max_vcpus"></a> [max\_vcpus](#input\_max\_vcpus) | Max vcpus allocatable to the seed generator environment | `string` | n/a | yes |
-| <a name="input_name"></a> [name](#input\_name) | Name suffix associated with resources | `string` | n/a | yes |
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | A list of public subnets inside the VPC | `list(string)` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to set for all resources | `map(string)` | `{}` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC id | `string` | `""` | no |

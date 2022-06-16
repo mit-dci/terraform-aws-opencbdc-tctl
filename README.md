@@ -253,7 +253,6 @@ Specifically:
 | <a name="input_ec2_public_key"></a> [ec2\_public\_key](#input\_ec2\_public\_key) | SSH public key to use in EC2 instances. | `string` | `""` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | n/a | yes |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | n/a | yes |
-| <a name="input_name"></a> [name](#input\_name) | Name suffix associated with resources | `string` | `"opencbdc-tctl"` | no |
 | <a name="input_private_subnet_tags"></a> [private\_subnet\_tags](#input\_private\_subnet\_tags) | Tags associated with private subnets | `map(string)` | `{}` | no |
 | <a name="input_public_subnet_tags"></a> [public\_subnet\_tags](#input\_public\_subnet\_tags) | Tags associated with public subnets | `map(string)` | `{}` | no |
 | <a name="input_resource_tags"></a> [resource\_tags](#input\_resource\_tags) | Tags to set for all resources | `map(string)` | `{}` | no |
