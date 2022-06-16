@@ -1,5 +1,5 @@
 locals {
-  name = "${var.name}-agent"
+  name = "test-controller-agent"
   tags = var.tags
 }
 
@@ -14,7 +14,7 @@ module "agent_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.1.0"
 
-  name   = "${local.name}-instance-sg"
+  name   = "agent-instance-sg"
   vpc_id = var.vpc_id
 
   # Allow all incoming traffic from within peered VPCs
@@ -147,7 +147,7 @@ module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   version = "~> 5"
 
-  role_name               = "${local.name}-role-${data.aws_region.current.name}"
+  role_name               = "agent-role-${data.aws_region.current.name}"
   create_role             = true
   create_instance_profile = true
   role_requires_mfa       = false
@@ -167,7 +167,7 @@ module "agent_outputs_iam_policy" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
   version = "~> 3.0"
 
-  name        = "${local.name}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-AgentOutputsS3WritePolicy"
+  name        = "${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-AgentOutputsS3WritePolicy"
   path        = "/"
   description = "Allow write to agent-outputs bucket"
 
@@ -191,7 +191,7 @@ EOF
 }
 
 resource "aws_ssm_parameter" "cw_agent_config" {
-  name  = "${local.name}-AmazonCloudWatch-Config.json"
+  name  = "AmazonCloudWatch-Config.json"
   type  = "String"
   value = <<CONFIG
 {

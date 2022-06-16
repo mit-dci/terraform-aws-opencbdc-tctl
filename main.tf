@@ -1,4 +1,5 @@
 locals {
+  name        = "hamilton"
   required_tags = {
     Owner       = "terraform"
     Environment = var.environment
@@ -32,7 +33,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "2.70.0"
 
-  name = var.name
+  name = local.name
   cidr = var.use1_main_network_block
   azs  = data.aws_availability_zones.use1.names
 
@@ -75,7 +76,7 @@ module "vpc_use2" {
     aws = aws.use2
   }
 
-  name = var.name
+  name = local.name
   cidr = var.use2_main_network_block
   azs  = data.aws_availability_zones.use2.names
 
@@ -119,7 +120,7 @@ module "vpc_usw2" {
     aws = aws.usw2
   }
 
-  name = var.name
+  name = local.name
   cidr = var.usw2_main_network_block
   azs  = data.aws_availability_zones.usw2.names
 
@@ -207,7 +208,6 @@ module "vpc_endpoints_use1" {
     aws = aws.use1
   }
 
-  name            = var.name
   vpc_id          = module.vpc.vpc_id
   public_subnets  = module.vpc.public_subnets
   private_subnets = module.vpc.private_subnets
@@ -227,7 +227,6 @@ module "vpc_endpoints_use2" {
     aws = aws.use2
   }
 
-  name            = var.name
   vpc_id          = module.vpc_use2.vpc_id
   public_subnets  = module.vpc_use2.public_subnets
   private_subnets = module.vpc_use2.private_subnets
@@ -247,7 +246,6 @@ module "vpc_endpoints_usw2" {
     aws = aws.usw2
   }
 
-  name            = var.name
   vpc_id          = module.vpc_usw2.vpc_id
   public_subnets  = module.vpc_usw2.public_subnets
   private_subnets = module.vpc_usw2.private_subnets
@@ -273,7 +271,7 @@ module "ecs" {
   source = "terraform-aws-modules/ecs/aws"
   version = "3.0.0"
 
-  name               = "${var.name}-${var.environment}"
+  name               = var.environment
   container_insights = true
   capacity_providers = ["FARGATE", "FARGATE_SPOT"]
 
@@ -306,7 +304,7 @@ module "ec2_profile" {
   source  = "terraform-aws-modules/ecs/aws//modules/ecs-instance-profile"
   version = "3.0.0"
 
-  name = "${var.name}-ecs-asg"
+  name = "ecs-asg"
 
   tags = local.tags
 }
@@ -323,7 +321,7 @@ module "ecs_cluster_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.1.0"
 
-  name   = "${var.name}-ecs-cluster-sg"
+  name   = "ecs-cluster-sg"
   vpc_id = module.vpc.vpc_id
 
   # Allow all incoming traffic from within VPC
@@ -347,7 +345,7 @@ module "ecs_cluster_asg" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "3.9.0"
 
-  name = "${var.name}-ecs-cluster-asg"
+  name = "ecs-cluster-asg"
 
   # Launch configuration
   #
@@ -393,7 +391,7 @@ module "ecs_cluster_asg" {
 
 # Binaries S3 Bucket
 resource "aws_s3_bucket" "binaries" {
-  bucket        = "${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-${var.name}-binaries"
+  bucket        = "${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-binaries"
   force_destroy = true
 
   server_side_encryption_configuration {
@@ -417,7 +415,7 @@ resource "aws_s3_bucket" "binaries" {
 
 # Test outputs S3 Bucket
 resource "aws_s3_bucket" "agent_outputs" {
-  bucket        = "${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-${var.name}-agent-outputs"
+  bucket        = "${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-agent-outputs"
   force_destroy = true
 
   server_side_encryption_configuration {
@@ -438,7 +436,6 @@ resource "aws_s3_bucket" "agent_outputs" {
 module "test_controller_service" {
   source = "./modules/test-controller"
 
-  name                                 = var.name
   vpc_id                               = module.vpc.vpc_id
   public_subnets                       = module.vpc.public_subnets
   private_subnets                      = module.vpc.private_subnets
@@ -471,7 +468,6 @@ module "uhs_seed_generator" {
   
   count = var.create_uhs_seed_generator ? 1 : 0
 
-  name                   = var.name
   vpc_id                 = module.vpc.vpc_id
   private_subnets        = module.vpc.private_subnets
   max_vcpus              = var.uhs_seed_generator_max_vcpus
@@ -490,7 +486,7 @@ module "uhs_seed_generator" {
 
 # Region: us-east-1
 resource "aws_cloudwatch_log_group" "agents_use1" {
-  name              = "/${var.name}-agents-us-east-1"
+  name              = "/test-controller-agents-us-east-1"
   retention_in_days = 1
 }
 
@@ -501,7 +497,6 @@ module "test_controller_agent_use1" {
     aws = aws.use1
   }
 
-  name                      = var.name
   vpc_id                    = module.vpc.vpc_id
   public_subnets            = module.vpc.public_subnets
   private_subnets           = module.vpc.private_subnets
@@ -521,7 +516,7 @@ module "test_controller_agent_use1" {
 
 # Region: us-east-2
 resource "aws_cloudwatch_log_group" "agents_use2" {
-  name              = "/${var.name}-agents-us-east-2"
+  name              = "/test-controller-agents-us-east-2"
   retention_in_days = 1
 }
 
@@ -532,7 +527,6 @@ module "test_controller_agent_use2" {
     aws = aws.use2
   }
 
-  name                      = var.name
   vpc_id                    = module.vpc_use2.vpc_id
   public_subnets            = module.vpc_use2.public_subnets
   private_subnets           = module.vpc_use2.private_subnets
@@ -552,7 +546,7 @@ module "test_controller_agent_use2" {
 
 # Region: us-west-2
 resource "aws_cloudwatch_log_group" "agents_usw2" {
-  name              = "/${var.name}-agents-us-west-2"
+  name              = "/test-controller-agents-us-west-2"
   retention_in_days = 1
 }
 
@@ -563,7 +557,6 @@ module "test_controller_agent_usw2" {
     aws = aws.usw2
   }
 
-  name                      = var.name
   vpc_id                    = module.vpc_usw2.vpc_id
   public_subnets            = module.vpc_usw2.public_subnets
   private_subnets           = module.vpc_usw2.private_subnets
@@ -588,7 +581,6 @@ module "test_controller_agent_usw2" {
 module "test_controller_deploy" {
   source = "./modules/test-controller-deploy"
 
-  name                             = var.name
   vpc_id                           = module.vpc.vpc_id
   private_subnets                  = module.vpc.private_subnets
   binaries_s3_bucket               = aws_s3_bucket.binaries.id
@@ -629,7 +621,6 @@ module "route53_dns" {
 module "bastion" {
   source = "./modules/bastion"
 
-  name            = var.name
   vpc_id          = module.vpc.vpc_id
   public_subnets  = module.vpc.public_subnets
   public_key      = var.ec2_public_key
