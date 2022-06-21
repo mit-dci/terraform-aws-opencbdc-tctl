@@ -117,6 +117,12 @@ variable "transaction_processor_main_branch" {
   description = "Main branch of transaction repo"
 }
 
+variable "transaction_processor_github_access_token" {
+  type = string
+  description = "Access token for the transaction repo if permissions are required"
+  default = ""
+}
+
 variable "uhs_seed_generator_job_name" {
   type = string
   description = "Name of batch job used for uhs seed generation"

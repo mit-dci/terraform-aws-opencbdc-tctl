@@ -215,6 +215,16 @@ module "task_security_group" {
   tags = local.tags
 }
 
+# Parameter Store
+
+resource "aws_ssm_parameter" "transaction_processor_github_access_token" {
+  count = var.transaction_processor_github_access_token != "" ? 1 : 0
+
+  name  = "/global/github/test-controller/transaction-repo-access-token"
+  type  = "SecureString"
+  value = var.transaction_processor_github_access_token
+}
+
 # ECS Fargate Task Definition
 
 data "aws_ecs_task_definition" "task" {
@@ -284,6 +294,14 @@ resource "aws_ecs_task_definition" "task" {
         "value": "${var.uhs_seed_generator_job_name}"
       }
     ],
+    %{if var.transaction_processor_github_access_token != ""}
+    "secrets": [
+      {
+          "name": "TRANSACTION_PROCESSOR_ACCESS_TOKEN",
+          "valueFrom": "${aws_ssm_parameter.transaction_processor_github_access_token[0].arn}"
+      }
+    ],
+    %{ else }%{ endif }
     "portMappings": [
       {
         "containerPort": ${tonumber(local.ui_port)}
@@ -387,6 +405,21 @@ data "aws_iam_policy_document" "ecs_task_execution_role_policy_actions" {
       "*",
     ]
   }
+
+  dynamic "statement" {
+    for_each = try(aws_ssm_parameter.transaction_processor_github_access_token, [])
+
+    content {
+      actions = [
+        "ssm:GetParameters",
+      ]
+
+      resources = [
+        statement.value.arn
+      ]
+    }
+  }
+
 }
 
 # ECS Task Execution IAM Role

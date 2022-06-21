@@ -122,6 +122,11 @@ variable "transaction_processor_main_branch" {
   description = "Main branch of transaction repo"
   default = "trunk"
 }
+variable "transaction_processor_github_access_token" {
+  type = string
+  description = "Access token for the transaction repo if permissions are required"
+  default = ""
+}
 variable "cluster_instance_type" {
   type        = string
   description = "If test controller launch type is EC2, the instance size to use."

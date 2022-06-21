@@ -436,28 +436,29 @@ resource "aws_s3_bucket" "agent_outputs" {
 module "test_controller_service" {
   source = "./modules/test-controller"
 
-  vpc_id                               = module.vpc.vpc_id
-  public_subnets                       = module.vpc.public_subnets
-  private_subnets                      = module.vpc.private_subnets
-  hosted_zone_id                       = module.route53_dns.hosted_zone_id 
-  azs                                  = module.vpc.azs
-  cluster_id                           = module.ecs.ecs_cluster_id
-  dns_base_domain                      = var.base_domain
-  binaries_s3_bucket                   = aws_s3_bucket.binaries.id
-  binaries_s3_bucket_arn               = aws_s3_bucket.binaries.arn
-  outputs_s3_bucket                    = aws_s3_bucket.agent_outputs.id
-  create_certbot_lambda                = var.create_certbot_lambda
-  lets_encrypt_email                   = var.lets_encrypt_email
-  s3_interface_endpoint                = module.vpc_endpoints_use1.s3_interface_endpoint
-  launch_type                          = var.test_controller_launch_type
-  cpu                                  = var.test_controller_cpu
-  memory                               = var.test_controller_memory
-  health_check_grace_period_seconds    = var.test_controller_health_check_grace_period_seconds
-  transaction_processor_repo_url       = var.transaction_processor_repo_url
-  transaction_processor_main_branch    = var.transaction_processor_main_branch
-  uhs_seed_generator_job_name          = module.uhs_seed_generator[0].job_name
-  uhs_seed_generator_job_definiton_arn = module.uhs_seed_generator[0].job_definiton_arn
-  uhs_seed_generator_job_queue_arn     = module.uhs_seed_generator[0].job_queue_arn
+  vpc_id                                    = module.vpc.vpc_id
+  public_subnets                            = module.vpc.public_subnets
+  private_subnets                           = module.vpc.private_subnets
+  hosted_zone_id                            = module.route53_dns.hosted_zone_id 
+  azs                                       = module.vpc.azs
+  cluster_id                                = module.ecs.ecs_cluster_id
+  dns_base_domain                           = var.base_domain
+  binaries_s3_bucket                        = aws_s3_bucket.binaries.id
+  binaries_s3_bucket_arn                    = aws_s3_bucket.binaries.arn
+  outputs_s3_bucket                         = aws_s3_bucket.agent_outputs.id
+  create_certbot_lambda                     = var.create_certbot_lambda
+  lets_encrypt_email                        = var.lets_encrypt_email
+  s3_interface_endpoint                     = module.vpc_endpoints_use1.s3_interface_endpoint
+  launch_type                               = var.test_controller_launch_type
+  cpu                                       = var.test_controller_cpu
+  memory                                    = var.test_controller_memory
+  health_check_grace_period_seconds         = var.test_controller_health_check_grace_period_seconds
+  transaction_processor_repo_url            = var.transaction_processor_repo_url
+  transaction_processor_main_branch         = var.transaction_processor_main_branch
+  transaction_processor_github_access_token = var.transaction_processor_github_access_token
+  uhs_seed_generator_job_name               = module.uhs_seed_generator[0].job_name
+  uhs_seed_generator_job_definiton_arn      = module.uhs_seed_generator[0].job_definiton_arn
+  uhs_seed_generator_job_queue_arn          = module.uhs_seed_generator[0].job_queue_arn
 
   # Tags
   tags = local.tags

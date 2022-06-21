@@ -82,14 +82,16 @@ For BYO domains, we recommend using a sub-domain (test.foo.com) as base_domain r
 This module will create several certificates in AWS Certificate Manager which use DNS for validation.
 Be sure that your base domain is updated before you run `terraform apply` or else the certificates will fail to validate.
 
-## Generate and Add a Github Access Token
+## Generate and Add a Github Access Tokens
 
+To properly deploy the test controller acces must be granted to several repos which can be managed via [personal access tokens](https://docs.github.com/en/enterprise/2.17/user/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line).
+One is **required** for the input var `test_controller_github_access_token` to clone the test controller repo you chose to use.
 Once deployed, this module will create a pipeline in AWS Codepipeline, which builds and pushes several container images related to the test controller.
 In order to perform this Codepipeline will clone the test controller codebase.
 Codepipeline must be connected to a Github account to clone from a Github repo.
-A [personal access token](https://docs.github.com/en/enterprise/2.17/user/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) should be passed to codepipeline for authentication.
-The token should only need the `public_repo` permission.
-After creating this, you can provide it to the module via the `test_controller_github_access_token` var.
+Additionally, `transaction_processor_github_access_token` may be necessary to set based on the permissions of the repo you wish to clone.
+If your transaction processor repo is not available to the public, you'll need to specify read permissions for this token.
+Depending on the repos you use, these inputs may take the same token or require different ones.
 
 ## Configure IAM Permissions
 
@@ -268,6 +270,7 @@ Specifically:
 | <a name="input_test_controller_launch_type"></a> [test\_controller\_launch\_type](#input\_test\_controller\_launch\_type) | The ECS task launch type to run the test controller. | `string` | `"FARGATE"` | no |
 | <a name="input_test_controller_memory"></a> [test\_controller\_memory](#input\_test\_controller\_memory) | The ECS task memory | `string` | `"30720"` | no |
 | <a name="input_test_controller_node_container_build_image"></a> [test\_controller\_node\_container\_build\_image](#input\_test\_controller\_node\_container\_build\_image) | An optional custom container build image for test controller Nodejs depencies | `string` | `"node:14"` | no |
+| <a name="input_transaction_processor_github_access_token"></a> [transaction\_processor\_github\_access\_token](#input\_transaction\_processor\_github\_access\_token) | Access token for the transaction repo if permissions are required | `string` | `""` | no |
 | <a name="input_transaction_processor_main_branch"></a> [transaction\_processor\_main\_branch](#input\_transaction\_processor\_main\_branch) | Main branch of transaction repo | `string` | `"trunk"` | no |
 | <a name="input_transaction_processor_repo_url"></a> [transaction\_processor\_repo\_url](#input\_transaction\_processor\_repo\_url) | Transaction repo cloned by the test controller for load generation logic | `string` | `"https://github.com/mit-dci/opencbdc-tx.git"` | no |
 | <a name="input_uhs_seed_generator_job_memory"></a> [uhs\_seed\_generator\_job\_memory](#input\_uhs\_seed\_generator\_job\_memory) | Memory required for a seed generator batch job | `string` | `"8192"` | no |

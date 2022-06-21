@@ -51,6 +51,7 @@ No requirements.
 | [aws_iam_role_policy_attachment.ecs_task_s3_read_only](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_route53_record.nlb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_record.ui_nlb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
+| [aws_ssm_parameter.transaction_processor_github_access_token](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
 | [aws_ecs_task_definition.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ecs_task_definition) | data source |
 | [aws_iam_policy_document.ecs_task_execution_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.ecs_task_execution_role_policy_actions](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
@@ -84,6 +85,7 @@ No requirements.
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | A list of public subnets inside the VPC | `list(string)` | `[]` | no |
 | <a name="input_s3_interface_endpoint"></a> [s3\_interface\_endpoint](#input\_s3\_interface\_endpoint) | DNS record used to route s3 traffic through s3 vpc interface endpoint | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to set for all resources | `map(string)` | `{}` | no |
+| <a name="input_transaction_processor_github_access_token"></a> [transaction\_processor\_github\_access\_token](#input\_transaction\_processor\_github\_access\_token) | Access token for the transaction repo if permissions are required | `string` | `""` | no |
 | <a name="input_transaction_processor_main_branch"></a> [transaction\_processor\_main\_branch](#input\_transaction\_processor\_main\_branch) | Main branch of transaction repo | `string` | n/a | yes |
 | <a name="input_transaction_processor_repo_url"></a> [transaction\_processor\_repo\_url](#input\_transaction\_processor\_repo\_url) | Transaction repo cloned by the test controller for load generation logic | `string` | n/a | yes |
 | <a name="input_uhs_seed_generator_job_definiton_arn"></a> [uhs\_seed\_generator\_job\_definiton\_arn](#input\_uhs\_seed\_generator\_job\_definiton\_arn) | Arn of uhs seed generator job definition | `string` | n/a | yes |
