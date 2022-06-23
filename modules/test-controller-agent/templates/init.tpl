@@ -10,7 +10,7 @@ packages:
   - iproute2
   - linux-tools-common
   - linux-tools-generic
-  - linux-tools-5.4.0-1037-aws
+  - linux-tools-5.15.0-1009-aws
   - iperf
   - gdb
   - libpcap-dev
@@ -87,7 +87,9 @@ runcmd:
   - amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-Config.json -s
   - /root/update-networking.sh
   - aws --region ${REGION} --endpoint-url ${S3_INTERFACE_ENDPOINT} s3 cp s3://${BINARIES_S3_BUCKET}/${S3_BUCKET_PREFIX}/agent-latest /root/agent
+  - aws --region ${REGION} --endpoint-url ${S3_INTERFACE_ENDPOINT} s3 cp s3://${BINARIES_S3_BUCKET}/${S3_BUCKET_PREFIX}/requirements.txt /root/requirements.txt
   - chmod +x /root/agent
+  - pip3 install -r /root/requirements.txt
   - systemctl daemon-reload
   - systemctl start cbdc-test-agent.service
   - devname=`ip -o link show | awk '{ if ( $9 == "UP"){ print substr($2, 1, length($2)-1) } }'`; maxrx=`ethtool -g $devname | grep 'RX:' | head -1 | awk '{print $2}'`; currentrx=`ethtool -g $devname | grep 'RX:' | tail -1 | awk '{print $2}'`;currenttx=`ethtool -g $devname | grep 'TX:' | tail -1 | awk '{print $2}'`;maxtx=`ethtool -g $devname | grep 'TX:' | head -1 | awk '{print $2}'`; ethtool -G $devname rx $maxrx tx $currenttx
