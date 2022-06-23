@@ -400,9 +400,11 @@ phases:
       - docker tag agent:latest agent:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - docker container create --name temp agent:latest
       - docker container cp temp:/app/agent ./agent-latest
+      - docker container cp temp:/app/requirements.txt ./requirements.txt
 artifacts:
   files:
     - agent-latest
+    - requirements.txt
 BUILDSPEC
   }
 
@@ -526,8 +528,9 @@ phases:
       docker: 18
   build:
     commands:
-      - echo Uploading binary to S3...
+      - echo Uploading binary and requirements.txt to S3...
       - aws --endpoint-url $S3_INTERFACE_ENDPOINT s3 cp ./agent-latest s3://$S3_BUCKET/test-controller-agent/
+      - aws --endpoint-url $S3_INTERFACE_ENDPOINT s3 cp ./requirements.txt s3://$S3_BUCKET/test-controller-agent/
 
 BUILDSPEC
   }
