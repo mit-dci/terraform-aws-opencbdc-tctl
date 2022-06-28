@@ -262,6 +262,11 @@ Specifically:
 | <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | n/a | yes |
 | <a name="input_hosted_zone_id"></a> [hosted\_zone\_id](#input\_hosted\_zone\_id) | Id of hosted zone in Route53 | `string` | `null` | no |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | n/a | yes |
+| <a name="input_opensearch_ebs_volume_size"></a> [opensearch\_ebs\_volume\_size](#input\_opensearch\_ebs\_volume\_size) | Size of EBS volume to back Open Search domain | `string` | `"10"` | no |
+| <a name="input_opensearch_ebs_volume_type"></a> [opensearch\_ebs\_volume\_type](#input\_opensearch\_ebs\_volume\_type) | Type of EBS volume to back Open Search domain | `string` | `"gp2"` | no |
+| <a name="input_opensearch_engine_version"></a> [opensearch\_engine\_version](#input\_opensearch\_engine\_version) | Engine version of Open Search domain | `string` | `"OpenSearch_1.2"` | no |
+| <a name="input_opensearch_instance_count"></a> [opensearch\_instance\_count](#input\_opensearch\_instance\_count) | Number of instances to include in OpenSearch domain | `string` | `1` | no |
+| <a name="input_opensearch_instance_type"></a> [opensearch\_instance\_type](#input\_opensearch\_instance\_type) | Instance type used for Open Search cluster | `string` | `"t3.small.search"` | no |
 | <a name="input_private_subnet_tags"></a> [private\_subnet\_tags](#input\_private\_subnet\_tags) | Tags associated with private subnets | `map(string)` | `{}` | no |
 | <a name="input_private_subnets_use1"></a> [private\_subnets\_use1](#input\_private\_subnets\_use1) | Private subnets in VPC us-east-1 (required if create\_networking==false) | `list(string)` | `null` | no |
 | <a name="input_private_subnets_use2"></a> [private\_subnets\_use2](#input\_private\_subnets\_use2) | Private subnets in VPC us-east-2 (required if create\_networking==false) | `list(string)` | `null` | no |

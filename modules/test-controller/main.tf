@@ -824,7 +824,14 @@ resource "aws_opensearch_domain" "this" {
   engine_version = var.opensearch_engine_version
 
   cluster_config {
-    instance_type = var.opensearch_instance_type
+    instance_type  = var.opensearch_instance_type
+    instance_count = var.opensearch_instance_count
+  }
+
+  ebs_options {
+    ebs_enabled = true
+    volume_type = var.opensearch_ebs_volume_type
+    volume_size = var.opensearch_ebs_volume_size
   }
 
   tags = local.tags
