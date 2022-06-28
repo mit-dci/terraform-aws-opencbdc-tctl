@@ -25,6 +25,7 @@ Upon being schdeuled, agents instances pull the agent binary from S3, then execu
 This process for the agents is defined in thier EC2 launch template.
 Two [AWS Network Load balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html) are deployed by the module.
 One forwards traffic to the test controller's UI, the other supports communication between agents and the test controller.
+Upon completion of a test run, results are sent to [AWS Opensearch](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html) via a [Amazon Kinesis Firehose](https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html) delivery stream.
 A bastion host is provided for troubleshooting the environment as well as pulling down raw test data if you wish to gather your own insights.
 To access to the bastion host you can either use ssh, which is configured by this module, or you can use [AWS Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html).
 
@@ -178,6 +179,21 @@ The process for this is documented in the test controller's [README](https://git
 This means the port must be specified in the url you enter into the browser `https://test-controller.<base_domain>:8443/auth`.
 The appropriate record is also provided as an output `route53_endpoints.ui_endpoint`.
 
+## Configure Opensearch Permissions
+In order for Amazon Kinesis Firehose to push OpenSearch, you will need to configure permissions for it inside of the OpenSearch cluster. 
+You can do so via the following steps:
+
+1. Login to the OpenSearch dashboard. You can find the url under General information of your cluster
+2. From the navigation pane, choose Security.
+3. Choose Roles.
+4. Search for the all_access role.
+5. Choose the Mapped users tab.
+6. On the Mapped users dialog page, choose Manage mapping.
+7. Under Backend roles, enter the role ARN created for Amazon Kenisis Firehose.
+8. Choose Map. Your Amazon Kenisis Firehose should now be able to forward data to your OpenSearch Service domain.
+
+Additionally, you may want to give your admin user the all_access permission along with the IAM user you use to access the AWS console. This will allow cluster attributes visibility from the console.
+
 ## Request Limit Increases (Optional)
 Some plots shown in the paper require a great deal of compute power to reproduce.
 The default quotas for EC2 instances set on AWS accounts will likely be insufficient in some cases.
@@ -214,6 +230,7 @@ Specifically:
 | <a name="module_ecs"></a> [ecs](#module\_ecs) | terraform-aws-modules/ecs/aws | 3.0.0 |
 | <a name="module_ecs_cluster_asg"></a> [ecs\_cluster\_asg](#module\_ecs\_cluster\_asg) | terraform-aws-modules/autoscaling/aws | 3.9.0 |
 | <a name="module_ecs_cluster_security_group"></a> [ecs\_cluster\_security\_group](#module\_ecs\_cluster\_security\_group) | terraform-aws-modules/security-group/aws | 3.1.0 |
+| <a name="module_opensearch"></a> [opensearch](#module\_opensearch) | ./modules/opensearch | n/a |
 | <a name="module_route53_dns"></a> [route53\_dns](#module\_route53\_dns) | ./modules/route53_dns | n/a |
 | <a name="module_test_controller_agent_use1"></a> [test\_controller\_agent\_use1](#module\_test\_controller\_agent\_use1) | ./modules/test-controller-agent | n/a |
 | <a name="module_test_controller_agent_use2"></a> [test\_controller\_agent\_use2](#module\_test\_controller\_agent\_use2) | ./modules/test-controller-agent | n/a |
@@ -254,14 +271,26 @@ Specifically:
 |------|-------------|------|---------|:--------:|
 | <a name="input_agent_instance_types"></a> [agent\_instance\_types](#input\_agent\_instance\_types) | The instance types used in agent launch templates. | `list(string)` | <pre>[<br>  "c5n.large",<br>  "c5n.2xlarge",<br>  "c5n.9xlarge",<br>  "c5n.metal"<br>]</pre> | no |
 | <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base domain to use for ACM Cert and Route53 record management. | `string` | `""` | no |
+| <a name="input_cert_arn"></a> [cert\_arn](#input\_cert\_arn) | A custom ACM cert arn to use; only valid when create\_networking is false. | `string` | `""` | no |
 | <a name="input_cluster_instance_type"></a> [cluster\_instance\_type](#input\_cluster\_instance\_type) | If test controller launch type is EC2, the instance size to use. | `string` | `"c5ad.12xlarge"` | no |
 | <a name="input_create_certbot_lambda"></a> [create\_certbot\_lambda](#input\_create\_certbot\_lambda) | Boolean to create the certbot lambda to update the letsencrypt cert for the test controller. | `bool` | `true` | no |
 | <a name="input_create_networking"></a> [create\_networking](#input\_create\_networking) | Flag to create VPCs and related resources | `string` | `true` | no |
+| <a name="input_create_opensearch"></a> [create\_opensearch](#input\_create\_opensearch) | Boolean to create Opensearch domain and related resources | `bool` | `false` | no |
 | <a name="input_create_uhs_seed_generator"></a> [create\_uhs\_seed\_generator](#input\_create\_uhs\_seed\_generator) | Determines whether or not to create uhs seed generator resources | `bool` | `true` | no |
 | <a name="input_ec2_public_key"></a> [ec2\_public\_key](#input\_ec2\_public\_key) | SSH public key to use in EC2 instances. | `string` | `""` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | n/a | yes |
+| <a name="input_fire_hose_buffering_interval"></a> [fire\_hose\_buffering\_interval](#input\_fire\_hose\_buffering\_interval) | Interval time between sending Fire Hoe buffer data to Open Search | `number` | `60` | no |
+| <a name="input_fire_hose_index_rotation_period"></a> [fire\_hose\_index\_rotation\_period](#input\_fire\_hose\_index\_rotation\_period) | The Elasticsearch index rotation period. Index rotation appends a timestamp to the IndexName to facilitate expiration of old data. | `string` | `"OneDay"` | no |
 | <a name="input_hosted_zone_id"></a> [hosted\_zone\_id](#input\_hosted\_zone\_id) | Id of hosted zone in Route53 | `string` | `null` | no |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | n/a | yes |
+| <a name="input_opensearch_ebs_volume_size"></a> [opensearch\_ebs\_volume\_size](#input\_opensearch\_ebs\_volume\_size) | Size of EBS volume to back Open Search domain | `string` | `"10"` | no |
+| <a name="input_opensearch_ebs_volume_type"></a> [opensearch\_ebs\_volume\_type](#input\_opensearch\_ebs\_volume\_type) | Type of EBS volume to back Open Search domain | `string` | `"gp2"` | no |
+| <a name="input_opensearch_engine_version"></a> [opensearch\_engine\_version](#input\_opensearch\_engine\_version) | The engine version to use for the OpenSearch domain | `string` | `"OpenSearch_1.3"` | no |
+| <a name="input_opensearch_instance_count"></a> [opensearch\_instance\_count](#input\_opensearch\_instance\_count) | Number of instances to include in OpenSearch domain | `string` | `"1"` | no |
+| <a name="input_opensearch_instance_type"></a> [opensearch\_instance\_type](#input\_opensearch\_instance\_type) | Instance type used for Open Search cluster | `string` | `"r6g.large.search"` | no |
+| <a name="input_opensearch_master_user_name"></a> [opensearch\_master\_user\_name](#input\_opensearch\_master\_user\_name) | Master username of opensearch user | `string` | `"admin"` | no |
+| <a name="input_opensearch_master_user_password"></a> [opensearch\_master\_user\_password](#input\_opensearch\_master\_user\_password) | Master password of opensearch user | `string` | `""` | no |
+| <a name="input_opensearch_route53_record_ttl"></a> [opensearch\_route53\_record\_ttl](#input\_opensearch\_route53\_record\_ttl) | TTL for CNAME record of opensearch domain | `string` | `"600"` | no |
 | <a name="input_private_subnet_tags"></a> [private\_subnet\_tags](#input\_private\_subnet\_tags) | Tags associated with private subnets | `map(string)` | `{}` | no |
 | <a name="input_private_subnets_use1"></a> [private\_subnets\_use1](#input\_private\_subnets\_use1) | Private subnets in VPC us-east-1 (required if create\_networking==false) | `list(string)` | `null` | no |
 | <a name="input_private_subnets_use2"></a> [private\_subnets\_use2](#input\_private\_subnets\_use2) | Private subnets in VPC us-east-2 (required if create\_networking==false) | `list(string)` | `null` | no |

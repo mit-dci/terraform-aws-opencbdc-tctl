@@ -8,6 +8,11 @@ variable "hosted_zone_id" {
   description = "Id of hosted zone in Route53"
   default = null
 }
+variable "cert_arn" {
+  type        = string
+  description = "A custom ACM cert arn to use; only valid when create_networking is false."
+  default = ""
+}
 
 #EC2
 variable "ec2_public_key" {
@@ -232,6 +237,65 @@ variable "cluster_instance_type" {
   description = "If test controller launch type is EC2, the instance size to use."
   default     = "c5ad.12xlarge"
 }
+
+# Opensearch
+variable "create_opensearch" {
+  type = bool
+  description = "Boolean to create Opensearch domain and related resources"
+  default = false
+}
+variable "opensearch_master_user_name" {
+  type = string
+  description = "Master username of opensearch user"
+  default = "admin"
+}
+variable "opensearch_master_user_password" {
+  type = string
+  description = "Master password of opensearch user"
+  default = ""
+  sensitive = true
+}
+variable "opensearch_route53_record_ttl" {
+  type = string
+  description = "TTL for CNAME record of opensearch domain"
+  default = "600"
+}
+variable "opensearch_engine_version" {
+  type = string
+  description = "The engine version to use for the OpenSearch domain"
+  default = "OpenSearch_1.3"
+}
+variable "opensearch_instance_type" {
+  type = string
+  description = "Instance type used for Open Search cluster"
+  default = "r6g.large.search"
+}
+variable "opensearch_instance_count" {
+  type = string
+  description = "Number of instances to include in OpenSearch domain"
+  default = "1"
+}
+variable "opensearch_ebs_volume_type" {
+  type = string
+  description = "Type of EBS volume to back Open Search domain"
+  default = "gp2"
+}
+variable "opensearch_ebs_volume_size" {
+  type = string
+  description = "Size of EBS volume to back Open Search domain"
+  default = "10"
+}
+variable "fire_hose_buffering_interval" {
+  type = number
+  description = "Interval time between sending Fire Hoe buffer data to Open Search"
+  default = 60
+}
+variable "fire_hose_index_rotation_period" {
+  type = string
+  description = "The Elasticsearch index rotation period. Index rotation appends a timestamp to the IndexName to facilitate expiration of old data."
+  default = "OneDay"
+}
+
 
 # Seed Generator
 variable "create_uhs_seed_generator" {
