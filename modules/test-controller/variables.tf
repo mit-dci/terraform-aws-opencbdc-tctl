@@ -1,3 +1,8 @@
+variable "environment" {
+  type        = string
+  description = "AWS tag to indicate environment name of each infrastructure object."
+}
+
 variable "vpc_id" {
   description = "The VPC id"
   type        = string
@@ -147,4 +152,16 @@ variable "uhs_seed_generator_job_queue_arn" {
 variable "lets_encrypt_email" {
   type = string
   description = "Email to associate with let's encrypt certificate"
+}
+
+variable "opensearch_instance_type" {
+  type = string
+  description = "Instance type used for Open Search cluster"
+  default = "t3.small.search"
+}
+
+variable "opensearch_engine_version" {
+  type = string
+  description = "Engine version of Open Search domain"
+  default = "OpenSearch_1.2"
 }

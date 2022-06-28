@@ -49,6 +49,7 @@ No requirements.
 | [aws_iam_role_policy.ecs_task_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_role_policy.ecs_task_role_s3_write_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_role_policy_attachment.ecs_task_s3_read_only](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_opensearch_domain.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/opensearch_domain) | resource |
 | [aws_route53_record.nlb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_record.ui_nlb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_ssm_parameter.transaction_processor_github_access_token](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
@@ -72,6 +73,7 @@ No requirements.
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The ECS task CPU | `string` | n/a | yes |
 | <a name="input_create_certbot_lambda"></a> [create\_certbot\_lambda](#input\_create\_certbot\_lambda) | Boolean to create the certbot lambda to update the letsencrypt cert for the test controller. | `bool` | n/a | yes |
 | <a name="input_dns_base_domain"></a> [dns\_base\_domain](#input\_dns\_base\_domain) | DNS Zone name to be used in load balancer CNAME creation. | `string` | n/a | yes |
+| <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | n/a | yes |
 | <a name="input_github_repo"></a> [github\_repo](#input\_github\_repo) | The Github repo base name | `string` | `"cbdc-test-controller"` | no |
 | <a name="input_github_repo_branch"></a> [github\_repo\_branch](#input\_github\_repo\_branch) | The Github repo owner | `string` | `"master"` | no |
 | <a name="input_github_repo_owner"></a> [github\_repo\_owner](#input\_github\_repo\_owner) | The Github repo owner | `string` | `"mit-dci"` | no |
@@ -80,6 +82,8 @@ No requirements.
 | <a name="input_launch_type"></a> [launch\_type](#input\_launch\_type) | The ECS task launch type | `string` | n/a | yes |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | n/a | yes |
 | <a name="input_memory"></a> [memory](#input\_memory) | The ECS task memory | `string` | n/a | yes |
+| <a name="input_opensearch_engine_version"></a> [opensearch\_engine\_version](#input\_opensearch\_engine\_version) | Engine version of Open Search domain | `string` | `"OpenSearch_1.2"` | no |
+| <a name="input_opensearch_instance_type"></a> [opensearch\_instance\_type](#input\_opensearch\_instance\_type) | Instance type used for Open Search cluster | `string` | `"t3.small.search"` | no |
 | <a name="input_outputs_s3_bucket"></a> [outputs\_s3\_bucket](#input\_outputs\_s3\_bucket) | The S3 bucket where test result outputs are stored. | `string` | n/a | yes |
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | A list of private subnets inside the VPC | `list(string)` | `[]` | no |
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | A list of public subnets inside the VPC | `list(string)` | `[]` | no |
