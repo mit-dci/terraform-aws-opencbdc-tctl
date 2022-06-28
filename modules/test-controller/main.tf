@@ -814,3 +814,18 @@ resource "aws_cloudwatch_event_target" "certbot_timer_target" {
   rule = aws_cloudwatch_event_rule.certbot_timer_rule[0].name
   arn  = module.certbot_lambda[0].this_lambda_function_arn
 }
+
+
+###################
+### Open Search ###
+###################
+resource "aws_opensearch_domain" "this" {
+  domain_name    = "${var.environment}-testresults"
+  engine_version = var.opensearch_engine_version
+
+  cluster_config {
+    instance_type = var.opensearch_instance_type
+  }
+
+  tags = local.tags
+}
