@@ -214,7 +214,7 @@ Specifically:
 | <a name="module_ecs"></a> [ecs](#module\_ecs) | terraform-aws-modules/ecs/aws | 3.0.0 |
 | <a name="module_ecs_cluster_asg"></a> [ecs\_cluster\_asg](#module\_ecs\_cluster\_asg) | terraform-aws-modules/autoscaling/aws | 3.9.0 |
 | <a name="module_ecs_cluster_security_group"></a> [ecs\_cluster\_security\_group](#module\_ecs\_cluster\_security\_group) | terraform-aws-modules/security-group/aws | 3.1.0 |
-| <a name="module_opensearch"></a> [opensearch](#module\_opensearch) | ./module/opensearch | n/a |
+| <a name="module_opensearch"></a> [opensearch](#module\_opensearch) | ./modules/opensearch | n/a |
 | <a name="module_route53_dns"></a> [route53\_dns](#module\_route53\_dns) | ./modules/route53_dns | n/a |
 | <a name="module_test_controller_agent_use1"></a> [test\_controller\_agent\_use1](#module\_test\_controller\_agent\_use1) | ./modules/test-controller-agent | n/a |
 | <a name="module_test_controller_agent_use2"></a> [test\_controller\_agent\_use2](#module\_test\_controller\_agent\_use2) | ./modules/test-controller-agent | n/a |
