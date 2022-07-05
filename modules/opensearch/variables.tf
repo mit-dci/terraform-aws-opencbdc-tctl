@@ -32,3 +32,9 @@ variable "opensearch_ebs_volume_size" {
   description = "Size of EBS volume to back Open Search domain"
   default = "10"
 }
+
+variable "tags" {
+  type        = map(string)
+  description = "Tags to set for all resources"
+  default     = {}
+}
