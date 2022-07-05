@@ -214,6 +214,7 @@ Specifically:
 | <a name="module_ecs"></a> [ecs](#module\_ecs) | terraform-aws-modules/ecs/aws | 3.0.0 |
 | <a name="module_ecs_cluster_asg"></a> [ecs\_cluster\_asg](#module\_ecs\_cluster\_asg) | terraform-aws-modules/autoscaling/aws | 3.9.0 |
 | <a name="module_ecs_cluster_security_group"></a> [ecs\_cluster\_security\_group](#module\_ecs\_cluster\_security\_group) | terraform-aws-modules/security-group/aws | 3.1.0 |
+| <a name="module_opensearch"></a> [opensearch](#module\_opensearch) | ./module/opensearch | n/a |
 | <a name="module_route53_dns"></a> [route53\_dns](#module\_route53\_dns) | ./modules/route53_dns | n/a |
 | <a name="module_test_controller_agent_use1"></a> [test\_controller\_agent\_use1](#module\_test\_controller\_agent\_use1) | ./modules/test-controller-agent | n/a |
 | <a name="module_test_controller_agent_use2"></a> [test\_controller\_agent\_use2](#module\_test\_controller\_agent\_use2) | ./modules/test-controller-agent | n/a |
@@ -257,6 +258,7 @@ Specifically:
 | <a name="input_cluster_instance_type"></a> [cluster\_instance\_type](#input\_cluster\_instance\_type) | If test controller launch type is EC2, the instance size to use. | `string` | `"c5ad.12xlarge"` | no |
 | <a name="input_create_certbot_lambda"></a> [create\_certbot\_lambda](#input\_create\_certbot\_lambda) | Boolean to create the certbot lambda to update the letsencrypt cert for the test controller. | `bool` | `true` | no |
 | <a name="input_create_networking"></a> [create\_networking](#input\_create\_networking) | Flag to create VPCs and related resources | `string` | `true` | no |
+| <a name="input_create_opensearch"></a> [create\_opensearch](#input\_create\_opensearch) | Boolean to create Opensearch domain and related resources | `bool` | `true` | no |
 | <a name="input_create_uhs_seed_generator"></a> [create\_uhs\_seed\_generator](#input\_create\_uhs\_seed\_generator) | Determines whether or not to create uhs seed generator resources | `bool` | `true` | no |
 | <a name="input_ec2_public_key"></a> [ec2\_public\_key](#input\_ec2\_public\_key) | SSH public key to use in EC2 instances. | `string` | `""` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | n/a | yes |
