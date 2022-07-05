@@ -1,3 +1,7 @@
+variable "environment" {
+  type        = string
+  description = "AWS tag to indicate environment name of each infrastructure object."
+}
 
 variable "opensearch_instance_type" {
   type = string
