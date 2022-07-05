@@ -536,7 +536,7 @@ module "uhs_seed_generator" {
 module "opensearch" {
   source = "./modules/opensearch"
 
-  count = var.create_opensearch
+  count = var.create_opensearch ? 1 : 0
 
   opensearch_instance_type   = var.opensearch_instance_type
   opensearch_instance_count  = var.opensearch_instance_count
