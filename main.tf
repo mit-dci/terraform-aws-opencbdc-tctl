@@ -546,7 +546,7 @@ module "opensearch" {
   opensearch_ebs_volume_size = var.opensearch_ebs_volume_size
 
   # Tags
-  tags = var.tags
+  tags                       = local.tags
 }
 
 ################################
