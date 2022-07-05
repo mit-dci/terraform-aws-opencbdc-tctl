@@ -232,6 +232,13 @@ variable "cluster_instance_type" {
   description = "If test controller launch type is EC2, the instance size to use."
   default     = "c5ad.12xlarge"
 }
+
+# Opensearch
+variable "create_opensearch" {
+  type = bool
+  description = "Boolean to create Opensearch domain and related resources"
+  default = true
+}
 variable "opensearch_instance_type" {
   type = string
   description = "Instance type used for Open Search cluster"
