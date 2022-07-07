@@ -18,6 +18,14 @@ resource "aws_opensearch_domain" "this" {
     enabled = true
   }
 
+  advanced_security_options {
+    enabled = true
+  }
+
+  node_to_node_encryption {
+    enabled = true
+  }
+
   domain_endpoint_options {
     enforce_https = true
     tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
@@ -32,10 +40,6 @@ resource "aws_opensearch_domain" "this" {
     ebs_enabled = true
     volume_type = var.opensearch_ebs_volume_type
     volume_size = var.opensearch_ebs_volume_size
-  }
-
-  advanced_security_options {
-    enabled = true
   }
 
   log_publishing_options {
