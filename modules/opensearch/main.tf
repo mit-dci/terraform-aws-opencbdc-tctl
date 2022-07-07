@@ -5,6 +5,9 @@ locals {
 
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
+data "aws_ssm_parameter" "master_password" {
+  name = "/opensearch/user/password"
+}
 
 
 ###################
@@ -21,6 +24,11 @@ resource "aws_opensearch_domain" "this" {
   advanced_security_options {
     enabled = true
     internal_user_database_enabled = true
+
+    master_user_options {
+      master_user_name = "master"
+      master_user_password = data.aws_ssm_parameter.master_password.value
+    }
   }
 
   node_to_node_encryption {
