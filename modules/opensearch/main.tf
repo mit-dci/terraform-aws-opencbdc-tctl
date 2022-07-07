@@ -20,6 +20,7 @@ resource "aws_opensearch_domain" "this" {
 
   advanced_security_options {
     enabled = true
+    internal_user_database_enabled = true
   }
 
   node_to_node_encryption {
