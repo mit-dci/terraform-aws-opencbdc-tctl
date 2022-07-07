@@ -541,7 +541,6 @@ module "opensearch" {
   environment                = var.environment
   opensearch_instance_type   = var.opensearch_instance_type
   opensearch_instance_count  = var.opensearch_instance_count
-  opensearch_engine_version  = var.opensearch_engine_version
   opensearch_ebs_volume_type = var.opensearch_ebs_volume_type
   opensearch_ebs_volume_size = var.opensearch_ebs_volume_size
 

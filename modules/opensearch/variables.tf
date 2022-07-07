@@ -15,12 +15,6 @@ variable "opensearch_instance_count" {
   default = 1
 }
 
-variable "opensearch_engine_version" {
-  type = string
-  description = "Engine version of Open Search domain"
-  default = "OpenSearch_1.2"
-}
-
 variable "opensearch_ebs_volume_type" {
   type = string
   description = "Type of EBS volume to back Open Search domain"
