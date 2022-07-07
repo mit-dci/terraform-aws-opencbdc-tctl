@@ -143,7 +143,13 @@ resource "aws_iam_role" "firehose" {
   tags = local.tags
 }
 
-resource "aws_iam_policy" "policy" {
+resource "aws_iam_policy_attachment" "firehose" {
+  name       = "firehose-policy-attachment"
+  roles      = [aws_iam_role.firehose.name]
+  policy_arn = aws_iam_policy.firehose.arn
+}
+
+resource "aws_iam_policy" "firehose" {
   name        = "KinesisFirehoseServiceRole-${local.name}-${data.aws_region.current.name}-1657054991552"
   path        = "/"
   description = "Access for Kinesis Firehose to Opensearch"
