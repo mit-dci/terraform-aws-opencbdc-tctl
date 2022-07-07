@@ -116,6 +116,11 @@ resource "aws_kinesis_firehose_delivery_stream" "this" {
     index_name = local.name
     type_name  = local.name
   }
+
+  s3_configuration {
+    role_arn   = aws_iam_role.firehose.arn
+    bucket_arn = aws_s3_bucket.this.arn
+  }
 }
 
 resource "aws_iam_role" "firehose" {
