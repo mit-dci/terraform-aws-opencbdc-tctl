@@ -93,7 +93,7 @@ resource "aws_kinesis_firehose_delivery_stream" "this" {
   destination = "elasticsearch"
 
   elasticsearch_configuration {
-    domain_arn = aws_elasticsearch_domain.this.arn
+    domain_arn = aws_opensearch_domain.this.arn
     role_arn   = aws_iam_role.firehose.arn
     index_name = local.name
     type_name  = local.name
@@ -123,7 +123,8 @@ resource "aws_iam_role" "firehose" {
 resource "aws_iam_policy" "policy" {
   name        = "KinesisFirehoseServiceRole-${local.name}-${data.aws_region.current.name}-1657054991552"
   path        = "/"
-  description = "My test policy"
+  description = "Access for Kinesis Firehose to Opensearch"
+  policy      = data.aws_iam_policy_document.firehose.json
 }
 
 data "aws_iam_policy_document" "firehose" {
@@ -137,7 +138,7 @@ data "aws_iam_policy_document" "firehose" {
       "s3:ListBucketMultipartUploads",
       "s3:PutObject"
     ]
-    resource =  [
+    resources =  [
       aws_s3_bucket.this.arn,
       "${aws_s3_bucket.this.arn}/*"
     ]
