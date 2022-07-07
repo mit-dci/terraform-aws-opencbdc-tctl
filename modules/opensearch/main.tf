@@ -15,7 +15,6 @@ data "aws_ssm_parameter" "master_password" {
 ###################
 resource "aws_opensearch_domain" "this" {
   domain_name    = "${var.environment}-${local.name}"
-  engine_version = var.opensearch_engine_version
 
   encrypt_at_rest {
     enabled = true
