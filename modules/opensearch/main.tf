@@ -73,6 +73,25 @@ resource "aws_opensearch_domain" "this" {
   tags = local.tags
 }
 
+# Access policy
+resource "aws_opensearch_domain_policy" "this" {
+  domain_name = aws_opensearch_domain.this.domain_name
+
+  access_policies = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect    = "Allow"
+        Action    = "es:*"
+        Principal = "*"
+        Resource  = "${aws_opensearch_domain.example.arn}/*"
+      }
+    ]
+  })
+}
+
+
+# Logs
 resource "aws_cloudwatch_log_group" "opensearch" {
   name = "/aws/OpenSearchService/domains/${local.name}"
 }
@@ -121,6 +140,8 @@ resource "aws_kinesis_firehose_delivery_stream" "this" {
   }
 }
 
+
+# IAM role
 resource "aws_iam_role" "firehose" {
   name = "firehose-${var.environment}-${local.name}"
 
@@ -203,10 +224,10 @@ data "aws_iam_policy_document" "firehose" {
   }
 }
 
+
 ##########
 ### S3 ###
 ##########
-# Test outputs S3 Bucket
 resource "aws_s3_bucket" "this" {
   bucket        = "${data.aws_caller_identity.current.account_id}-firehose-backup"
   force_destroy = true
