@@ -133,6 +133,12 @@ resource "aws_kinesis_firehose_delivery_stream" "this" {
     role_arn           = aws_iam_role.firehose.arn
     index_name         = local.name
     buffering_interval = var.fire_hose_buffering_interval
+
+    cloudwatch_logging_options {
+      enabled         = true
+      log_group_name  = aws_cloudwatch_log_group.firehose.name
+      log_stream_name = local.name
+    }
   }
 
   s3_configuration {
@@ -141,6 +147,11 @@ resource "aws_kinesis_firehose_delivery_stream" "this" {
   }
 }
 
+
+# Cloudwatch Logs
+resource "aws_cloudwatch_log_group" "firehose" {
+  name = "/aws/kinesisfirehose/"
+}
 
 # IAM role
 resource "aws_iam_role" "firehose" {
