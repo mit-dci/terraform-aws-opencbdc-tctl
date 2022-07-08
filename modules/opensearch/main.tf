@@ -113,7 +113,6 @@ resource "aws_kinesis_firehose_delivery_stream" "this" {
     domain_arn = aws_opensearch_domain.this.arn
     role_arn   = aws_iam_role.firehose.arn
     index_name = local.name
-    type_name  = local.name
   }
 
   s3_configuration {
