@@ -84,7 +84,7 @@ resource "aws_opensearch_domain_policy" "this" {
         Effect    = "Allow"
         Action    = "es:*"
         Principal = "*"
-        Resource  = "${aws_opensearch_domain.example.arn}/*"
+        Resource  = "${aws_opensearch_domain.this.arn}/*"
       }
     ]
   })
