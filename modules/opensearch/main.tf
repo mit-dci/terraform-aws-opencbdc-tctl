@@ -242,6 +242,14 @@ data "aws_iam_policy_document" "firehose" {
 }
 
 
+###############
+### Cognito ###
+###############
+resource "aws_cognito_user_pool" "pool" {
+  name = "${local.name}-access"
+}
+
+
 ##########
 ### S3 ###
 ##########
