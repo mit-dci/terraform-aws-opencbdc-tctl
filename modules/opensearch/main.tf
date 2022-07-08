@@ -129,9 +129,10 @@ resource "aws_kinesis_firehose_delivery_stream" "this" {
   destination = "elasticsearch"
 
   elasticsearch_configuration {
-    domain_arn = aws_opensearch_domain.this.arn
-    role_arn   = aws_iam_role.firehose.arn
-    index_name = local.name
+    domain_arn         = aws_opensearch_domain.this.arn
+    role_arn           = aws_iam_role.firehose.arn
+    index_name         = local.name
+    buffering_interval = var.fire_hose_buffering_interval
   }
 
   s3_configuration {

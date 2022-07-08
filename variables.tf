@@ -259,6 +259,12 @@ variable "opensearch_ebs_volume_size" {
   description = "Size of EBS volume to back Open Search domain"
   default = "10"
 }
+variable "fire_hose_buffering_interval" {
+  type = number
+  description = "Interval time between sending Fire Hoe buffer data to Open Search"
+  default = 60
+}
+
 
 
 # Seed Generator
