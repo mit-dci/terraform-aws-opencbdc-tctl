@@ -153,6 +153,11 @@ resource "aws_cloudwatch_log_group" "firehose" {
   name = "/aws/kinesisfirehose/"
 }
 
+resource "aws_cloudwatch_log_stream" "firehose" {
+  name           = local.name
+  log_group_name = aws_cloudwatch_log_group.firehose.name
+}
+
 # IAM role
 resource "aws_iam_role" "firehose" {
   name = "firehose-${var.environment}-${local.name}"
