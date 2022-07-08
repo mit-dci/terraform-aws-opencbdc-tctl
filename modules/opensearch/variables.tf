@@ -27,6 +27,12 @@ variable "opensearch_ebs_volume_size" {
   default = "10"
 }
 
+variable "fire_hose_buffering_interval" {
+  type = number
+  description = "Interval time between sending Fire Hoe buffer data to Open Search"
+  default = 60
+}
+
 variable "tags" {
   type        = map(string)
   description = "Tags to set for all resources"
