@@ -96,7 +96,7 @@ resource "aws_cloudwatch_log_group" "opensearch" {
   name = "/aws/OpenSearchService/domains/${local.name}"
 }
 
-resource "aws_cloudwatch_log_resource_policy" "example" {
+resource "aws_cloudwatch_log_resource_policy" "this" {
   policy_name = "OpenSearchService-${local.name}"
 
   policy_document = <<CONFIG
@@ -245,10 +245,15 @@ data "aws_iam_policy_document" "firehose" {
 ###############
 ### Cognito ###
 ###############
-resource "aws_cognito_user_pool" "pool" {
+resource "aws_cognito_user_pool" "this" {
   name = "${local.name}-access"
 }
 
+resource "aws_cognito_identity_pool" "this" {
+  identity_pool_name               = "${local.name}-access"
+  allow_unauthenticated_identities = false
+  allow_classic_flow               = false
+}
 
 ##########
 ### S3 ###
