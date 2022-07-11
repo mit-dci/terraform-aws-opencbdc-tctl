@@ -33,24 +33,8 @@ module "agent_security_group" {
   tags = local.tags
 }
 
-# Agent ec2 cloud-init template
-data "template_file" "cloud_init" {
-    template = file("${path.module}/templates/init.tpl")
-
-    vars = {
-        REGION                = data.aws_region.current.name
-        BINARIES_S3_BUCKET    = var.binaries_s3_bucket
-        OUTPUTS_S3_BUCKET     = var.outputs_s3_bucket
-        S3_BUCKET_PREFIX      = local.name
-        S3_INTERFACE_ENDPOINT = var.s3_interface_endpoint
-        S3_INTERFACE_REGION   = "us-east-1"
-        COORDINATOR_HOST      = var.controller_endpoint
-        COORDINATOR_PORT      = var.controller_port
-    }
-}
-
 # Cloud-init config
-data "template_cloudinit_config" "config" {
+data "cloudinit_config" "config" {
   gzip          = true
   base64_encode = true
 
@@ -58,7 +42,19 @@ data "template_cloudinit_config" "config" {
   part {
     filename     = "init.cfg"
     content_type = "text/cloud-config"
-    content      = data.template_file.cloud_init.rendered
+    content      = templatefile(
+      "${path.module}/templates/init.tpl",
+      {
+        "REGION"                = data.aws_region.current.name
+        "BINARIES_S3_BUCKET"    = var.binaries_s3_bucket
+        "OUTPUTS_S3_BUCKET"     = var.outputs_s3_bucket
+        "S3_BUCKET_PREFIX"      = local.name
+        "S3_INTERFACE_ENDPOINT" = var.s3_interface_endpoint
+        "S3_INTERFACE_REGION"   = "us-east-1"
+        "COORDINATOR_HOST"      = var.controller_endpoint
+        "COORDINATOR_PORT"      = var.controller_port
+      }
+    )
   }
 }
 
@@ -102,7 +98,7 @@ resource "aws_launch_template" "agent" {
   instance_type                        = each.key
   instance_initiated_shutdown_behavior = "terminate"
   key_name                             = aws_key_pair.agent.id
-  user_data                            = data.template_cloudinit_config.config.rendered
+  user_data                            = data.cloudinit_config.config.rendered
   update_default_version               = true
 
   block_device_mappings {

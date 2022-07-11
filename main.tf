@@ -5,9 +5,7 @@ locals {
     Environment = var.environment
   }
   tags = merge(var.resource_tags, local.required_tags)
-}
 
-locals {
   vpc_route_tables      = concat(module.vpc.public_route_table_ids, module.vpc.private_route_table_ids)
   vpc_use2_route_tables = concat(module.vpc_use2.public_route_table_ids, module.vpc_use2.private_route_table_ids)
   vpc_usw2_route_tables = concat(module.vpc_usw2.public_route_table_ids, module.vpc_usw2.private_route_table_ids)
@@ -290,14 +288,6 @@ module "ecs" {
 ## ECS EC2 ASG for us-east-1 ###
 ################################
 
-data "template_file" "user_data" {
-  template = file("${path.module}/templates/user-data.sh")
-
-  vars = {
-    cluster_name = module.ecs.ecs_cluster_id
-  }
-}
-
 module "ec2_profile" {
   count = var.test_controller_launch_type == "EC2" ? 1 : 0
 
@@ -360,7 +350,8 @@ module "ecs_cluster_asg" {
   recreate_asg_when_lc_changes = false
   iam_instance_profile         = module.ec2_profile[0].iam_instance_profile_id
 
-  user_data = data.template_file.user_data.rendered
+  user_data = templatefile("${path.module}/templates/user-data.sh", { cluster_name = module.ecs.ecs_cluster_id })
+
 
   # Auto scaling group
   vpc_zone_identifier       = module.vpc.private_subnets
@@ -439,7 +430,7 @@ module "test_controller_service" {
   vpc_id                                    = module.vpc.vpc_id
   public_subnets                            = module.vpc.public_subnets
   private_subnets                           = module.vpc.private_subnets
-  hosted_zone_id                            = module.route53_dns.hosted_zone_id 
+  hosted_zone_id                            = module.route53_dns.hosted_zone_id
   azs                                       = module.vpc.azs
   cluster_id                                = module.ecs.ecs_cluster_id
   dns_base_domain                           = var.base_domain
@@ -466,7 +457,7 @@ module "test_controller_service" {
 
 module "uhs_seed_generator" {
   source = "./modules/uhs-seed-generator"
-  
+
   count = var.create_uhs_seed_generator ? 1 : 0
 
   vpc_id                 = module.vpc.vpc_id

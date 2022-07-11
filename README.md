@@ -197,7 +197,6 @@ Specifically:
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.4 |
 | <a name="provider_aws.use2"></a> [aws.use2](#provider\_aws.use2) | >= 4.4 |
 | <a name="provider_aws.usw2"></a> [aws.usw2](#provider\_aws.usw2) | >= 4.4 |
-| <a name="provider_template"></a> [template](#provider\_template) | n/a |
 
 ## Modules
 
@@ -241,7 +240,6 @@ Specifically:
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 | [aws_ssm_parameter.ecs_optimized_ami](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
-| [template_file.user_data](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 
