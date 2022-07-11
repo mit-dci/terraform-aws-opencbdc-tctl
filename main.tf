@@ -341,14 +341,6 @@ module "ecs" {
 ## ECS EC2 ASG for us-east-1 ###
 ################################
 
-data "template_file" "user_data" {
-  template = file("${path.module}/templates/user-data.sh")
-
-  vars = {
-    cluster_name = module.ecs.ecs_cluster_id
-  }
-}
-
 module "ec2_profile" {
   count = var.test_controller_launch_type == "EC2" ? 1 : 0
 
@@ -379,7 +371,7 @@ module "ecs_cluster_security_group" {
   ingress_with_cidr_blocks = [
     {
       rule        = "all-all"
-      cidr_blocks = join(",",[ 
+      cidr_blocks = join(",",[
         var.use1_main_network_block,
         var.use2_main_network_block,
         var.usw2_main_network_block
@@ -415,7 +407,8 @@ module "ecs_cluster_asg" {
   recreate_asg_when_lc_changes = false
   iam_instance_profile         = module.ec2_profile[0].iam_instance_profile_id
 
-  user_data = data.template_file.user_data.rendered
+  user_data = templatefile("${path.module}/templates/user-data.sh", { cluster_name = module.ecs.ecs_cluster_id })
+
 
   # Auto scaling group
   vpc_zone_identifier       = local.private_subnets_use1
@@ -492,14 +485,14 @@ module "test_controller_service" {
   source = "./modules/test-controller"
 
   vpc_id                                    = local.vpc_id_use1
-  vpc_cidr_blocks                           = [
+  vpc_cidr_blocks                               = [
         var.use1_main_network_block,
         var.use2_main_network_block,
         var.usw2_main_network_block
   ]
   public_subnets                            = local.public_subnets_use1
   private_subnets                           = local.private_subnets_use1
-  hosted_zone_id                            = local.hosted_zone_id 
+  hosted_zone_id                            = local.hosted_zone_id
   azs                                       = local.vpc_azs_use1
   cluster_id                                = module.ecs.ecs_cluster_id
   dns_base_domain                           = var.base_domain
@@ -526,7 +519,7 @@ module "test_controller_service" {
 
 module "uhs_seed_generator" {
   source = "./modules/uhs-seed-generator"
-  
+
   count = var.create_uhs_seed_generator ? 1 : 0
 
   vpc_id                 = local.vpc_id_use1
