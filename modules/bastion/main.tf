@@ -81,24 +81,8 @@ resource "aws_eip" "bastion" {
   )
 }
 
-# Cloud-init config template file
-data "template_file" "script" {
-  template = file("${path.module}/templates/init.tpl")
-
-  vars = {
-    CERTS_MOUNT_PATH       = local.certs_mount_path
-    TESTRUNS_MOUNT_PATH    = local.testruns_mount_path
-    BINARIES_MOUNT_PATH    = local.binaries_mount_path
-    CERTS_EFS_ID           = var.certs_efs_id
-    TESTRUNS_EFS_ID        = var.testruns_efs_id
-    BINARIES_EFS_ID        = var.binaries_efs_id
-    REGION                 = data.aws_region.current.name
-    EIP_ASSOCIATION_ID     = aws_eip.bastion.id
-  }
-}
-
 # Cloud-init config
-data "template_cloudinit_config" "config" {
+data "cloudinit_config" "config" {
   gzip          = true
   base64_encode = true
 
@@ -106,7 +90,19 @@ data "template_cloudinit_config" "config" {
   part {
     filename     = "init.cfg"
     content_type = "text/cloud-config"
-    content      = data.template_file.script.rendered
+    content      = templatefile(
+      "${path.module}/templates/init.tpl",
+      {
+        "CERTS_MOUNT_PATH"       = local.certs_mount_path
+        "TESTRUNS_MOUNT_PATH"    = local.testruns_mount_path
+        "BINARIES_MOUNT_PATH"    = local.binaries_mount_path
+        "CERTS_EFS_ID"           = var.certs_efs_id
+        "TESTRUNS_EFS_ID"        = var.testruns_efs_id
+        "BINARIES_EFS_ID"        = var.binaries_efs_id
+        "REGION"                 = data.aws_region.current.name
+        "EIP_ASSOCIATION_ID"     = aws_eip.bastion.id
+      }
+    )
   }
 }
 
@@ -131,7 +127,7 @@ module "asg" {
   iam_instance_profile         = module.instance_profile_role.iam_instance_profile_name
   key_name                     = aws_key_pair.bastion.id
 
-  user_data = data.template_cloudinit_config.config.rendered
+  user_data = data.cloudinit_config.config.rendered
 
   # Auto scaling group
   vpc_zone_identifier       = var.public_subnets
