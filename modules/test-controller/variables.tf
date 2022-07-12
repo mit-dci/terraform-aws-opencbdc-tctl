@@ -4,6 +4,12 @@ variable "vpc_id" {
   default     = ""
 }
 
+variable "vpc_cidr_blocks" {
+  description = "A list of VPC cidr blocks to add to the interface enpoint security group"
+  type = list(string)
+  default = ["10.0.0.0/8"]
+}
+
 variable "public_subnets" {
   description = "A list of public subnets inside the VPC"
   type        = list(string)

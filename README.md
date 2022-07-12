@@ -251,13 +251,27 @@ Specifically:
 | <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base domain to use for ACM Cert and Route53 record management. | `string` | `""` | no |
 | <a name="input_cluster_instance_type"></a> [cluster\_instance\_type](#input\_cluster\_instance\_type) | If test controller launch type is EC2, the instance size to use. | `string` | `"c5ad.12xlarge"` | no |
 | <a name="input_create_certbot_lambda"></a> [create\_certbot\_lambda](#input\_create\_certbot\_lambda) | Boolean to create the certbot lambda to update the letsencrypt cert for the test controller. | `bool` | `true` | no |
+| <a name="input_create_networking"></a> [create\_networking](#input\_create\_networking) | Flag to create VPCs and related resources | `string` | `true` | no |
 | <a name="input_create_uhs_seed_generator"></a> [create\_uhs\_seed\_generator](#input\_create\_uhs\_seed\_generator) | Determines whether or not to create uhs seed generator resources | `bool` | `true` | no |
 | <a name="input_ec2_public_key"></a> [ec2\_public\_key](#input\_ec2\_public\_key) | SSH public key to use in EC2 instances. | `string` | `""` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | n/a | yes |
+| <a name="input_hosted_zone_id"></a> [hosted\_zone\_id](#input\_hosted\_zone\_id) | Id of hosted zone in Route53 | `string` | `null` | no |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | n/a | yes |
 | <a name="input_private_subnet_tags"></a> [private\_subnet\_tags](#input\_private\_subnet\_tags) | Tags associated with private subnets | `map(string)` | `{}` | no |
+| <a name="input_private_subnets_use1"></a> [private\_subnets\_use1](#input\_private\_subnets\_use1) | Private subnets in VPC us-east-1 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_private_subnets_use2"></a> [private\_subnets\_use2](#input\_private\_subnets\_use2) | Private subnets in VPC us-east-2 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_private_subnets_usw2"></a> [private\_subnets\_usw2](#input\_private\_subnets\_usw2) | Private subnets in VPC us-west-2 (required if create\_networking==false) | `list(string)` | `null` | no |
 | <a name="input_public_subnet_tags"></a> [public\_subnet\_tags](#input\_public\_subnet\_tags) | Tags associated with public subnets | `map(string)` | `{}` | no |
+| <a name="input_public_subnets_use1"></a> [public\_subnets\_use1](#input\_public\_subnets\_use1) | Public subnets in VPC us-east-1 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_public_subnets_use2"></a> [public\_subnets\_use2](#input\_public\_subnets\_use2) | Public subnets in VPC us-east-2 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_public_subnets_usw2"></a> [public\_subnets\_usw2](#input\_public\_subnets\_usw2) | Public subnets in VPC us-west-2 (required if create\_networking==false) | `list(string)` | `null` | no |
 | <a name="input_resource_tags"></a> [resource\_tags](#input\_resource\_tags) | Tags to set for all resources | `map(string)` | `{}` | no |
+| <a name="input_route_tables_use1"></a> [route\_tables\_use1](#input\_route\_tables\_use1) | Route tables in VPC us-east-1 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_route_tables_use2"></a> [route\_tables\_use2](#input\_route\_tables\_use2) | Route tables in VPC us-east-2 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_route_tables_usw2"></a> [route\_tables\_usw2](#input\_route\_tables\_usw2) | Route tables in VPC us-west-2 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_s3_interface_endpoint_use1"></a> [s3\_interface\_endpoint\_use1](#input\_s3\_interface\_endpoint\_use1) | S3 endpoint for VPC in us-east-1 (required if create\_networking==false) | `string` | `null` | no |
+| <a name="input_s3_interface_endpoint_use2"></a> [s3\_interface\_endpoint\_use2](#input\_s3\_interface\_endpoint\_use2) | S3 endpoint for VPC in us-east-2 (required if create\_networking==false) | `string` | `null` | no |
+| <a name="input_s3_interface_endpoint_usw2"></a> [s3\_interface\_endpoint\_usw2](#input\_s3\_interface\_endpoint\_usw2) | S3 endpoint for VPC in us-west-2 (required if create\_networking==false) | `string` | `null` | no |
 | <a name="input_subnet_prefix_extension"></a> [subnet\_prefix\_extension](#input\_subnet\_prefix\_extension) | CIDR block bits extension to calculate CIDR blocks of each subnetwork. | `number` | `4` | no |
 | <a name="input_test_controller_app_container_base_image"></a> [test\_controller\_app\_container\_base\_image](#input\_test\_controller\_app\_container\_base\_image) | An optional custom container base image for the test controller and releated services | `string` | `"ubuntu:20.04"` | no |
 | <a name="input_test_controller_cpu"></a> [test\_controller\_cpu](#input\_test\_controller\_cpu) | The ECS task CPU | `string` | `"4096"` | no |
@@ -279,6 +293,12 @@ Specifically:
 | <a name="input_use1_main_network_block"></a> [use1\_main\_network\_block](#input\_use1\_main\_network\_block) | Base CIDR block to be used in us-east-1. | `string` | `"10.0.0.0/16"` | no |
 | <a name="input_use2_main_network_block"></a> [use2\_main\_network\_block](#input\_use2\_main\_network\_block) | Base CIDR block to be used in us-east-2. | `string` | `"10.10.0.0/16"` | no |
 | <a name="input_usw2_main_network_block"></a> [usw2\_main\_network\_block](#input\_usw2\_main\_network\_block) | Base CIDR block to be used in us-west-2. | `string` | `"10.20.0.0/16"` | no |
+| <a name="input_vpc_azs_use1"></a> [vpc\_azs\_use1](#input\_vpc\_azs\_use1) | AZs of VPC in us-east-1 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_vpc_azs_use2"></a> [vpc\_azs\_use2](#input\_vpc\_azs\_use2) | AZs of VPC in us-east-2 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_vpc_azs_usw2"></a> [vpc\_azs\_usw2](#input\_vpc\_azs\_usw2) | AZs of VPC in us-east-2 (required if create\_networking==false) | `list(string)` | `null` | no |
+| <a name="input_vpc_id_use1"></a> [vpc\_id\_use1](#input\_vpc\_id\_use1) | ID of VPC in us-east-1 (required if create\_networking==false) | `string` | `null` | no |
+| <a name="input_vpc_id_use2"></a> [vpc\_id\_use2](#input\_vpc\_id\_use2) | ID of VPC in us-east-2 (required if create\_networking==false) | `string` | `null` | no |
+| <a name="input_vpc_id_usw2"></a> [vpc\_id\_usw2](#input\_vpc\_id\_usw2) | ID of VPC in us-west-2 (required if create\_networking==false) | `string` | `null` | no |
 | <a name="input_zone_offset"></a> [zone\_offset](#input\_zone\_offset) | CIDR block bits extension offset to calculate Public subnets, avoiding collisions with Private subnets. | `number` | `8` | no |
 
 ## Outputs

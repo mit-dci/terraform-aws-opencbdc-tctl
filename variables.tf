@@ -3,6 +3,11 @@ variable "base_domain" {
   description = "Base domain to use for ACM Cert and Route53 record management."
   default = ""
 }
+variable "hosted_zone_id" {
+  type = string
+  description = "Id of hosted zone in Route53"
+  default = null
+}
 
 #EC2
 variable "ec2_public_key" {
@@ -12,6 +17,101 @@ variable "ec2_public_key" {
 }
 
 # VPC Variables
+variable "create_networking" {
+  type = string
+  description = "Flag to create VPCs and related resources"
+  default = true
+}
+variable "vpc_id_use1" {
+  type = string
+  description = "ID of VPC in us-east-1 (required if create_networking==false)"
+  default = null
+}
+variable "vpc_id_use2" {
+  type = string
+  description = "ID of VPC in us-east-2 (required if create_networking==false)"
+  default = null
+}
+variable "vpc_id_usw2" {
+  type = string
+  description = "ID of VPC in us-west-2 (required if create_networking==false)"
+  default = null
+}
+variable "public_subnets_use1" {
+  type = list(string)
+  description = "Public subnets in VPC us-east-1 (required if create_networking==false)"
+  default = null
+}
+variable "public_subnets_use2" {
+  type = list(string)
+  description = "Public subnets in VPC us-east-2 (required if create_networking==false)"
+  default = null
+}
+variable "public_subnets_usw2" {
+  type = list(string)
+  description = "Public subnets in VPC us-west-2 (required if create_networking==false)"
+  default = null
+}
+variable "private_subnets_use1" {
+  type = list(string)
+  description = "Private subnets in VPC us-east-1 (required if create_networking==false)"
+  default = null
+}
+variable "private_subnets_use2" {
+  type = list(string)
+  description = "Private subnets in VPC us-east-2 (required if create_networking==false)"
+  default = null
+}
+variable "private_subnets_usw2" {
+  type = list(string)
+  description = "Private subnets in VPC us-west-2 (required if create_networking==false)"
+  default = null
+}
+variable "route_tables_use1" {
+  type = list(string)
+  description = "Route tables in VPC us-east-1 (required if create_networking==false)"
+  default = null
+}
+variable "route_tables_use2" {
+  type = list(string)
+  description = "Route tables in VPC us-east-2 (required if create_networking==false)"
+  default = null
+}
+variable "route_tables_usw2" {
+  type = list(string)
+  description = "Route tables in VPC us-west-2 (required if create_networking==false)"
+  default = null
+}
+variable "vpc_azs_use1" {
+  type = list(string)
+  description = "AZs of VPC in us-east-1 (required if create_networking==false)"
+  default = null
+}
+variable "vpc_azs_use2" {
+  type = list(string)
+  description = "AZs of VPC in us-east-2 (required if create_networking==false)"
+  default = null
+}
+variable "vpc_azs_usw2" {
+  type = list(string)
+  description = "AZs of VPC in us-east-2 (required if create_networking==false)"
+  default = null
+}
+variable "s3_interface_endpoint_use1" {
+  type = string
+  description = "S3 endpoint for VPC in us-east-1 (required if create_networking==false)"
+  default = null
+}
+variable "s3_interface_endpoint_use2" {
+  type = string
+  description = "S3 endpoint for VPC in us-east-2 (required if create_networking==false)"
+  default = null
+}
+variable "s3_interface_endpoint_usw2" {
+  type = string
+  description = "S3 endpoint for VPC in us-west-2 (required if create_networking==false)"
+  default = null
+}
 variable "use1_main_network_block" {
   type        = string
   description = "Base CIDR block to be used in us-east-1."
