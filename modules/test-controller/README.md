@@ -91,6 +91,7 @@ No requirements.
 | <a name="input_uhs_seed_generator_job_definiton_arn"></a> [uhs\_seed\_generator\_job\_definiton\_arn](#input\_uhs\_seed\_generator\_job\_definiton\_arn) | Arn of uhs seed generator job definition | `string` | n/a | yes |
 | <a name="input_uhs_seed_generator_job_name"></a> [uhs\_seed\_generator\_job\_name](#input\_uhs\_seed\_generator\_job\_name) | Name of batch job used for uhs seed generation | `string` | n/a | yes |
 | <a name="input_uhs_seed_generator_job_queue_arn"></a> [uhs\_seed\_generator\_job\_queue\_arn](#input\_uhs\_seed\_generator\_job\_queue\_arn) | Arn of uhs seed generator job queue | `string` | n/a | yes |
+| <a name="input_vpc_cidr_blocks"></a> [vpc\_cidr\_blocks](#input\_vpc\_cidr\_blocks) | A list of VPC cidr blocks to add to the interface enpoint security group | `list(string)` | <pre>[<br>  "10.0.0.0/8"<br>]</pre> | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC id | `string` | `""` | no |
 
 ## Outputs

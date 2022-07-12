@@ -567,7 +567,7 @@ module "efs_security_group" {
   ingress_with_cidr_blocks = [
     {
       rule        = "nfs-tcp"
-      cidr_blocks = "10.0.0.0/16"
+      cidr_blocks = join(",", var.vpc_cidr_blocks)
     }
   ]
 
