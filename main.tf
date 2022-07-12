@@ -492,7 +492,7 @@ module "test_controller_service" {
   source = "./modules/test-controller"
 
   vpc_id                                    = local.vpc_id_use1
-  vpc_cidr_blocks                               = [
+  vpc_cidr_blocks                           = [
         var.use1_main_network_block,
         var.use2_main_network_block,
         var.usw2_main_network_block
@@ -590,7 +590,7 @@ module "test_controller_agent_use2" {
 
   vpc_id                    = local.vpc_id_use2
   public_subnets            = local.public_subnets_use2
-  private_subnets           = local.private_subnets_usw2
+  private_subnets           = local.private_subnets_use2
   public_key                = var.ec2_public_key
   binaries_s3_bucket        = aws_s3_bucket.binaries.id
   outputs_s3_bucket         = aws_s3_bucket.agent_outputs.id
@@ -618,8 +618,8 @@ module "test_controller_agent_usw2" {
     aws = aws.usw2
   }
 
-  vpc_id                    = local.vpc_id_use2
-  public_subnets            = local.public_subnets_use2
+  vpc_id                    = local.vpc_id_usw2
+  public_subnets            = local.public_subnets_usw2
   private_subnets           = local.public_subnets_usw2
   public_key                = var.ec2_public_key
   binaries_s3_bucket        = aws_s3_bucket.binaries.id
@@ -671,7 +671,7 @@ module "route53_dns" {
 
   source = "./modules/route53_dns"
 
-  dns_base_domain                   = var.base_domain
+  dns_base_domain = var.base_domain
 
   # Tags
   tags = local.tags
