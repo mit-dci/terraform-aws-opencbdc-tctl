@@ -205,7 +205,7 @@ module "task_security_group" {
   ingress_with_cidr_blocks = [
     {
       rule        = "all-all"
-      cidr_blocks = "10.0.0.0/16"
+      cidr_blocks = join(",", var.vpc_cidr_blocks)
     }
   ]
   # Allow all outgoing traffic
