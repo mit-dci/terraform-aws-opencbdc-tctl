@@ -7,37 +7,37 @@ locals {
   tags = merge(var.resource_tags, local.required_tags)
 
   # ids
-  vpc_id_use1 = try(module.vpc[0].vpc_id, var.vpc_id_use1)
-  vpc_id_use2 = try(module.vpc_use2[0].vpc_id, var.vpc_id_use2)
-  vpc_id_usw2 = try(module.vpc_usw2[0].vpc_id, var.vpc_id_usw2)
+  vpc_id_use1 = var.create_networking ? module.vpc[0].vpc_id : var.vpc_id_use1
+  vpc_id_use2 = var.create_networking ? module.vpc_use2[0].vpc_id : var.vpc_id_use2
+  vpc_id_usw2 = var.create_networking ? module.vpc_usw2[0].vpc_id : var.vpc_id_usw2
 
   # public subnets
-  public_subnets_use1 = try(module.vpc[0].public_subnets, var.public_subnets_use1)
-  public_subnets_use2 = try(module.vpc_use2[0].public_subnets, var.public_subnets_use2)
-  public_subnets_usw2 = try(module.vpc_usw2[0].public_subnets, var.public_subnets_usw2)
+  public_subnets_use1 = var.create_networking ? module.vpc[0].public_subnets : var.public_subnets_use1
+  public_subnets_use2 = var.create_networking ? module.vpc_use2[0].public_subnets : var.public_subnets_use2
+  public_subnets_usw2 = var.create_networking ? module.vpc_usw2[0].public_subnets : var.public_subnets_usw2
 
   # private subnets
-  private_subnets_use1 = try(module.vpc[0].private_subnets, var.private_subnets_use1)
-  private_subnets_use2 = try(module.vpc_use2[0].private_subnets, var.private_subnets_use2)
-  private_subnets_usw2 = try(module.vpc_usw2[0].private_subnets, var.private_subnets_usw2)
+  private_subnets_use1 = var.create_networking ? module.vpc[0].private_subnets : var.private_subnets_use1
+  private_subnets_use2 = var.create_networking ? module.vpc_use2[0].private_subnets : var.private_subnets_use2
+  private_subnets_usw2 = var.create_networking ? module.vpc_usw2[0].private_subnets : var.private_subnets_usw2
 
   # route tables
-  route_tables_use1 = try(concat(module.vpc[0].public_route_table_ids, module.vpc[0].private_route_table_ids), var.route_tables_use1)
-  route_tables_use2 = try(concat(module.vpc_use2[0].public_route_table_ids, module.vpc_use2[0].private_route_table_ids), var.route_tables_use2)
-  route_tables_usw2 = try(concat(module.vpc_usw2[0].public_route_table_ids, module.vpc_usw2[0].private_route_table_ids), var.route_tables_usw2)
+  route_tables_use1 = var.create_networking ? concat(module.vpc[0].public_route_table_ids, module.vpc[0].private_route_table_ids) : var.route_tables_use1
+  route_tables_use2 = var.create_networking ? concat(module.vpc_use2[0].public_route_table_ids, module.vpc_use2[0].private_route_table_ids) : var.route_tables_use2
+  route_tables_usw2 = var.create_networking ? concat(module.vpc_usw2[0].public_route_table_ids, module.vpc_usw2[0].private_route_table_ids) : var.route_tables_usw2
 
   # azs
-  vpc_azs_use1 = try(module.vpc[0].azs, var.vpc_azs_use1)
-  vpc_azs_use2 = try(module.vpc_use2[0].azs, var.vpc_azs_use2)
-  vpc_azs_usw2 = try(module.vpc_usw2[0].azs, var.vpc_azs_usw2)
+  vpc_azs_use1 = var.create_networking ? module.vpc[0].azs : var.vpc_azs_use1
+  vpc_azs_use2 = var.create_networking ? module.vpc_use2[0].azs : var.vpc_azs_use2
+  vpc_azs_usw2 = var.create_networking ? module.vpc_usw2[0].azs : var.vpc_azs_usw2
 
   # VPC endpoints
-  s3_interface_endpoint_use1 = try(module.vpc_endpoints_use1.s3_interface_endpoint, var.s3_interface_endpoint_use1)
-  s3_interface_endpoint_use2 = try(module.vpc_endpoints_use2.s3_interface_endpoint, var.s3_interface_endpoint_use2)
-  s3_interface_endpoint_usw2 = try(module.vpc_endpoints_usw2.s3_interface_endpoint, var.s3_interface_endpoint_usw2)
+  s3_interface_endpoint_use1 = var.create_networking ? module.vpc_endpoints_use1[0].s3_interface_endpoint : var.s3_interface_endpoint_use1
+  s3_interface_endpoint_use2 = var.create_networking ? module.vpc_endpoints_use2[0].s3_interface_endpoint : var.s3_interface_endpoint_use2
+  s3_interface_endpoint_usw2 = var.create_networking ? module.vpc_endpoints_usw2[0].s3_interface_endpoint : var.s3_interface_endpoint_usw2
 
   # Route53
-  hosted_zone_id = try(module.route53_dns[0].hosted_zone_id, var.hosted_zone_id)
+  hosted_zone_id = var.create_networking ? module.route53_dns[0].hosted_zone_id : var.hosted_zone_id
 }
 
 # get the current aws region
@@ -278,7 +278,7 @@ module "vpc_endpoints_use2" {
 
   vpc_id          = local.vpc_id_use2
   public_subnets  = local.public_subnets_use2
-  private_subnets = local.private_subnets_usw2
+  private_subnets = local.private_subnets_use2
   vpc_cidr_blocks = [
     var.use1_main_network_block,
     var.use2_main_network_block,
@@ -297,8 +297,8 @@ module "vpc_endpoints_usw2" {
     aws = aws.usw2
   }
 
-  vpc_id          = local.vpc_id_use2
-  public_subnets  = local.public_subnets_use2
+  vpc_id          = local.vpc_id_usw2
+  public_subnets  = local.public_subnets_usw2
   private_subnets =local.public_subnets_usw2
   vpc_cidr_blocks = [
     var.use1_main_network_block,
