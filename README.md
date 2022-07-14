@@ -82,6 +82,13 @@ For BYO domains, we recommend using a sub-domain (test.foo.com) as base_domain r
 This module will create several certificates in AWS Certificate Manager which use DNS for validation.
 Be sure that your base domain is updated before you run `terraform apply` or else the certificates will fail to validate.
 
+
+## BYO Network
+This module includes all the necessary networking resources for the test controller to communicate with agents across three regions.
+It also supports the ability to integrate with an existing network topology if you happen to have one.
+To use your own, set the flag `create_networking=false` in your call to the module.
+You will then be required to set inputs for the network resources that you wish to connect. 
+
 ## Generate and Add a Github Access Tokens
 
 To properly deploy the test controller acces must be granted to several repos which can be managed via [personal access tokens](https://docs.github.com/en/enterprise/2.17/user/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line).
