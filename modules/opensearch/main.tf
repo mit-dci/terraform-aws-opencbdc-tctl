@@ -279,6 +279,11 @@ resource "aws_cognito_user_pool" "this" {
   name = "${local.name}-access"
 }
 
+resource "aws_cognito_user_pool_domain" "this" {
+  domain       = "${local.name}-access"
+  user_pool_id = aws_cognito_user_pool.this.id
+}
+
 resource "aws_cognito_identity_pool" "this" {
   identity_pool_name               = "${local.name}-access"
   allow_unauthenticated_identities = false
