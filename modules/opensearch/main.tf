@@ -116,7 +116,9 @@ resource "aws_iam_role" "opensearch_cognito_access" {
 
 resource "aws_iam_policy_attachment" "opensearch_cognito_access" {
   name       = "${local.name}-cognito-access"
+  roles      = [aws_iam_role.opensearch_cognito_access.name]
   policy_arn = "arn:aws:iam::aws:policy/AmazonOpenSearchServiceCognitoAccess"
+
 }
 
 # Logs
