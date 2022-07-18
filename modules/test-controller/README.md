@@ -72,7 +72,6 @@ No requirements.
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The ECS task CPU | `string` | n/a | yes |
 | <a name="input_create_certbot_lambda"></a> [create\_certbot\_lambda](#input\_create\_certbot\_lambda) | Boolean to create the certbot lambda to update the letsencrypt cert for the test controller. | `bool` | n/a | yes |
 | <a name="input_dns_base_domain"></a> [dns\_base\_domain](#input\_dns\_base\_domain) | DNS Zone name to be used in load balancer CNAME creation. | `string` | n/a | yes |
-| <a name="input_environment"></a> [environment](#input\_environment) | AWS tag to indicate environment name of each infrastructure object. | `string` | n/a | yes |
 | <a name="input_github_repo"></a> [github\_repo](#input\_github\_repo) | The Github repo base name | `string` | `"cbdc-test-controller"` | no |
 | <a name="input_github_repo_branch"></a> [github\_repo\_branch](#input\_github\_repo\_branch) | The Github repo owner | `string` | `"master"` | no |
 | <a name="input_github_repo_owner"></a> [github\_repo\_owner](#input\_github\_repo\_owner) | The Github repo owner | `string` | `"mit-dci"` | no |
