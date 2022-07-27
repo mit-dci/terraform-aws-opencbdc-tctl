@@ -3,6 +3,16 @@ variable "environment" {
   description = "AWS tag to indicate environment name of each infrastructure object."
 }
 
+variable "dns_base_domain" {
+  type        = string
+  description = "DNS Zone name to be used in opensearch custom endpoint options."
+}
+
+variable "custom_endpoint_certificate_arn" {
+  type        = string
+  description = "The ACM cert arn to use with the custom endpoint."
+}
+
 variable "opensearch_instance_type" {
   type = string
   description = "Instance type used for Open Search cluster"
