@@ -539,7 +539,7 @@ module "opensearch" {
   count = var.create_opensearch ? 1 : 0
 
   dns_base_domain                 = var.base_domain
-  custom_endpoint_certificate_arn = module.route53_dns[0].cert_arn
+  custom_endpoint_certificate_arn = var.opensearch_acm_certificate_arn != "" ? var.opensearch_acm_certificate_arn : module.route53_dns[0].cert_arn
   environment                     = var.environment
   opensearch_instance_type        = var.opensearch_instance_type
   opensearch_instance_count       = var.opensearch_instance_count

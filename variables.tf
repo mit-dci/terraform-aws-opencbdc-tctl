@@ -239,6 +239,11 @@ variable "create_opensearch" {
   description = "Boolean to create Opensearch domain and related resources"
   default = true
 }
+variable "opensearch_acm_certificate_arn" {
+  type = string
+  description = "Custom ACM certificate arn to use with opensearch endpoint; only used if create_netorking is false."
+  default = ""
+}
 variable "opensearch_instance_type" {
   type = string
   description = "Instance type used for Open Search cluster"
