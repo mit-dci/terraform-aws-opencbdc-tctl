@@ -25,7 +25,7 @@ resource "aws_opensearch_domain" "this" {
     internal_user_database_enabled = true
 
     master_user_options {
-      master_user_name = "master"
+      master_user_name = "admin"
       master_user_password = data.aws_ssm_parameter.master_password.value
     }
   }
