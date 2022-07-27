@@ -81,6 +81,13 @@ resource "aws_opensearch_domain" "this" {
   }
 
   tags = local.tags
+
+  depends_on = [aws_iam_service_linked_role.this]
+}
+
+# OpenSearch service-linked role
+resource "aws_iam_service_linked_role" "this" {
+  aws_service_name = "opensearchservice.amazonaws.com"
 }
 
 # Access policy
