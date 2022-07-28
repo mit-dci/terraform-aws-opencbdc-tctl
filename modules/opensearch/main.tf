@@ -30,13 +30,6 @@ resource "aws_opensearch_domain" "this" {
     }
   }
 
-  cognito_options {
-    enabled          = true
-    identity_pool_id = aws_cognito_identity_pool.this.id
-    user_pool_id     = aws_cognito_user_pool.this.id
-    role_arn         = aws_iam_role.opensearch_cognito_access.arn
-  }
-
   node_to_node_encryption {
     enabled = true
   }
@@ -105,30 +98,6 @@ resource "aws_opensearch_domain_policy" "this" {
       }
     ]
   })
-}
-
-resource "aws_iam_role" "opensearch_cognito_access" {
-  name               = "${local.name}-cognito-access"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "opensearchservice.amazonaws.com"
-        }
-      },
-    ]
-  })
-}
-
-resource "aws_iam_policy_attachment" "opensearch_cognito_access" {
-  name       = "${local.name}-cognito-access"
-  roles      = [aws_iam_role.opensearch_cognito_access.name]
-  policy_arn = "arn:aws:iam::aws:policy/AmazonOpenSearchServiceCognitoAccess"
-
 }
 
 # Logs
@@ -288,25 +257,6 @@ data "aws_iam_policy_document" "firehose" {
        "${aws_opensearch_domain.this.arn}/${local.name}/_stats",
     ]
   }
-}
-
-
-###############
-### Cognito ###
-###############
-resource "aws_cognito_user_pool" "this" {
-  name = "${local.name}-access"
-}
-
-resource "aws_cognito_user_pool_domain" "this" {
-  domain       = "${local.name}-access"
-  user_pool_id = aws_cognito_user_pool.this.id
-}
-
-resource "aws_cognito_identity_pool" "this" {
-  identity_pool_name               = "${local.name}-access"
-  allow_unauthenticated_identities = false
-  allow_classic_flow               = false
 }
 
 ##########
