@@ -160,6 +160,15 @@ resource "aws_cloudwatch_log_resource_policy" "this" {
 CONFIG
 }
 
+# CNAME for custom OpenSearch endpoint
+resource "aws_route53_record" "this" {
+  zone_id = var.hosted_zone_id
+  name    = "${local.name}.${var.dns_base_domain}"
+  type    = "CNAME"
+  ttl     = "5"
+  records = [ aws_opensearch_domain.this.endpoint ]
+}
+
 
 ################
 ### Firehose ###

@@ -8,6 +8,11 @@ variable "dns_base_domain" {
   description = "DNS Zone name to be used in opensearch custom endpoint options."
 }
 
+variable "hosted_zone_id" {
+  type = string
+  description = "Route53 hosted zone id of the base domain."
+}
+
 variable "custom_endpoint_certificate_arn" {
   type        = string
   description = "The ACM cert arn to use with the custom endpoint."
