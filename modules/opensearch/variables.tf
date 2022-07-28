@@ -18,9 +18,15 @@ variable "custom_endpoint_certificate_arn" {
   description = "The ACM cert arn to use with the custom endpoint."
 }
 
+variable "opensearch_engine_version" {
+  type = string
+  description = "The engine version to use for the OpenSearch domain"
+  default = "OpenSearch_1.3"
+}
+
 variable "opensearch_instance_type" {
   type = string
-  description = "Instance type used for Open Search cluster"
+  description = "Instance type used for OpenSearch cluster"
   default = "t3.small.search"
 }
 
@@ -32,19 +38,19 @@ variable "opensearch_instance_count" {
 
 variable "opensearch_ebs_volume_type" {
   type = string
-  description = "Type of EBS volume to back Open Search domain"
+  description = "Type of EBS volume to back OpenSearch domain"
   default = "gp2"
 }
 
 variable "opensearch_ebs_volume_size" {
   type = string
-  description = "Size of EBS volume to back Open Search domain"
+  description = "Size of EBS volume to back OpenSearch domain"
   default = "10"
 }
 
 variable "fire_hose_buffering_interval" {
   type = number
-  description = "Interval time between sending Fire Hoe buffer data to Open Search"
+  description = "Interval time between sending Fire Hose buffer data to OpenSearch"
   default = 60
 }
 

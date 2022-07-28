@@ -15,6 +15,7 @@ data "aws_ssm_parameter" "master_password" {
 ###################
 resource "aws_opensearch_domain" "this" {
   domain_name    = "${var.environment}-${local.name}"
+  engine_version = var.opensearch_engine_version
 
   encrypt_at_rest {
     enabled = true
@@ -230,9 +231,9 @@ data "aws_iam_policy_document" "firehose" {
   statement {
     effect = "Allow"
     actions = [
-      "es:DescribeElasticsearchDomain",
-      "es:DescribeElasticsearchDomains",
-      "es:DescribeElasticsearchDomainConfig",
+      "es:DescribeDomain",
+      "es:DescribeDomains",
+      "es:DescribeDomainConfig",
       "es:ESHttpPost",
       "es:ESHttpPut"
     ]
@@ -250,13 +251,26 @@ data "aws_iam_policy_document" "firehose" {
     resources = [
        "${aws_opensearch_domain.this.arn}/_all/_settings",
        "${aws_opensearch_domain.this.arn}/_cluster/stats",
-       "${aws_opensearch_domain.this.arn}/${local.name}/_mapping/*",
+       "${aws_opensearch_domain.this.arn}/${local.name}*/_mapping/*",
        "${aws_opensearch_domain.this.arn}/_nodes",
+       "${aws_opensearch_domain.this.arn}/_nodes/stats",
        "${aws_opensearch_domain.this.arn}/_nodes/*/stats",
-       "${aws_opensearch_domain.this.arn}/_nodes/_stats",
-       "${aws_opensearch_domain.this.arn}/${local.name}/_stats",
+       "${aws_opensearch_domain.this.arn}/_stats",
+       "${aws_opensearch_domain.this.arn}/${local.name}*/_stats"
     ]
   }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "kinesis:DescribeStream",
+      "kinesis:GetShardIterator",
+      "kinesis:GetRecords",
+      "kinesis:ListShards"
+    ]
+    resources = [ aws_kinesis_firehose_delivery_stream.this.arn ]
+  }
+
 }
 
 ##########
