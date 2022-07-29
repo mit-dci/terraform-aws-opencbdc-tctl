@@ -242,7 +242,7 @@ variable "cluster_instance_type" {
 variable "create_opensearch" {
   type = bool
   description = "Boolean to create Opensearch domain and related resources"
-  default = true
+  default = false
 }
 variable "opensearch_engine_version" {
   type = string
@@ -257,7 +257,7 @@ variable "opensearch_instance_type" {
 variable "opensearch_instance_count" {
   type = string
   description = "Number of instances to include in OpenSearch domain"
-  default = 1
+  default = "1"
 }
 variable "opensearch_ebs_volume_type" {
   type = string
@@ -277,7 +277,7 @@ variable "fire_hose_buffering_interval" {
 variable "fire_hose_index_rotation_period" {
   type = string
   description = "The Elasticsearch index rotation period. Index rotation appends a timestamp to the IndexName to facilitate expiration of old data."
-  default = "NoRotation"
+  default = "OneDay"
 }
 
 
