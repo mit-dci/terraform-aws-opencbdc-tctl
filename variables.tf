@@ -252,7 +252,7 @@ variable "opensearch_engine_version" {
 variable "opensearch_instance_type" {
   type = string
   description = "Instance type used for Open Search cluster"
-  default = "t3.small.search"
+  default = "r6g.large.search"
 }
 variable "opensearch_instance_count" {
   type = string
