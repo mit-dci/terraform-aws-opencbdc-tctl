@@ -240,7 +240,8 @@ data "aws_iam_policy_document" "firehose" {
       "es:ESHttpPut"
     ]
     resources = [
-      "${aws_opensearch_domain.this.arn}*"
+      "${aws_opensearch_domain.this.arn}",
+      "${aws_opensearch_domain.this.arn}/*"
     ]
   }
 
