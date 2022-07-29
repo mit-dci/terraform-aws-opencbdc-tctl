@@ -8,6 +8,11 @@ variable "hosted_zone_id" {
   description = "Id of hosted zone in Route53"
   default = null
 }
+variable "cert_arn" {
+  type        = string
+  description = "A custom ACM cert arn to use; only valid when create_networking is false."
+  default = ""
+}
 
 #EC2
 variable "ec2_public_key" {
@@ -239,10 +244,10 @@ variable "create_opensearch" {
   description = "Boolean to create Opensearch domain and related resources"
   default = true
 }
-variable "opensearch_acm_certificate_arn" {
+variable "opensearch_engine_version" {
   type = string
-  description = "Custom ACM certificate arn to use with opensearch endpoint; only used if create_netorking is false."
-  default = ""
+  description = "The engine version to use for the OpenSearch domain"
+  default = "OpenSearch_1.3"
 }
 variable "opensearch_instance_type" {
   type = string
@@ -257,7 +262,7 @@ variable "opensearch_instance_count" {
 variable "opensearch_ebs_volume_type" {
   type = string
   description = "Type of EBS volume to back Open Search domain"
-  default = "gp2"
+  default = "gp3"
 }
 variable "opensearch_ebs_volume_size" {
   type = string
@@ -269,7 +274,11 @@ variable "fire_hose_buffering_interval" {
   description = "Interval time between sending Fire Hoe buffer data to Open Search"
   default = 60
 }
-
+variable "fire_hose_index_rotation_period" {
+  type = string
+  description = "The Elasticsearch index rotation period. Index rotation appends a timestamp to the IndexName to facilitate expiration of old data."
+  default = "NoRotation"
+}
 
 
 # Seed Generator

@@ -38,6 +38,7 @@ locals {
 
   # Route53
   hosted_zone_id = var.create_networking ? module.route53_dns[0].hosted_zone_id : var.hosted_zone_id
+  cert_arn       = var.create_networking ? module.route53_dns[0].cert_arn : var.cert_arn
 }
 
 # get the current aws region
@@ -540,13 +541,15 @@ module "opensearch" {
 
   dns_base_domain                 = var.base_domain
   hosted_zone_id                  = local.hosted_zone_id
-  custom_endpoint_certificate_arn = var.opensearch_acm_certificate_arn != "" ? var.opensearch_acm_certificate_arn : module.route53_dns[0].cert_arn
+  custom_endpoint_certificate_arn = local.cert_arn
   environment                     = var.environment
+  opensearch_engine_version       = var.opensearch_engine_version
   opensearch_instance_type        = var.opensearch_instance_type
   opensearch_instance_count       = var.opensearch_instance_count
   opensearch_ebs_volume_type      = var.opensearch_ebs_volume_type
   opensearch_ebs_volume_size      = var.opensearch_ebs_volume_size
   fire_hose_buffering_interval    = var.fire_hose_buffering_interval
+  fire_hose_index_rotation_period = var.fire_hose_index_rotation_period
 
   # Tags
   tags                       = local.tags
