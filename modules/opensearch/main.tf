@@ -263,18 +263,6 @@ data "aws_iam_policy_document" "firehose" {
        "${aws_opensearch_domain.this.arn}/${local.name}*/_stats"
     ]
   }
-
-  statement {
-    effect = "Allow"
-    actions = [
-      "kinesis:DescribeStream",
-      "kinesis:GetShardIterator",
-      "kinesis:GetRecords",
-      "kinesis:ListShards"
-    ]
-    resources = [ aws_kinesis_firehose_delivery_stream.this.arn ]
-  }
-
 }
 
 ##########
