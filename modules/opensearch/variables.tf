@@ -54,6 +54,12 @@ variable "fire_hose_buffering_interval" {
   default = 60
 }
 
+variable "fire_hose_index_rotation_period" {
+  type = string
+  description = "The Elasticsearch index rotation period. Index rotation appends a timestamp to the IndexName to facilitate expiration of old data."
+  default = "NoRotation"
+}
+
 variable "tags" {
   type        = map(string)
   description = "Tags to set for all resources"
