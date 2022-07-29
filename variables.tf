@@ -262,7 +262,7 @@ variable "opensearch_instance_count" {
 variable "opensearch_ebs_volume_type" {
   type = string
   description = "Type of EBS volume to back Open Search domain"
-  default = "gp3"
+  default = "gp2"
 }
 variable "opensearch_ebs_volume_size" {
   type = string
