@@ -82,6 +82,6 @@ output "route53_endpoints" {
         bastion             = module.bastion.bastion_enpoint
         ui_endpoint         = module.test_controller_service.ui_endpoint
         agent_endpoint      = module.test_controller_service.agent_endpoint
-        opensearch_endpoint = module.opensearch[0].opensearch_endpoint
+        opensearch_endpoint = var.create_opensearch ? module.opensearch[0].opensearch_endpoint : ""
     }
 }

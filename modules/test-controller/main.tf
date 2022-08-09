@@ -719,7 +719,7 @@ module "certbot_lambda" {
   count = var.create_certbot_lambda ? 1 : 0
 
   source  = "terraform-aws-modules/lambda/aws"
-  version = "1.48.0"
+  version = "~> 3.0.0"
 
   function_name = "${local.name}-certbot-lambda"
   description   = "Certbot lambda"
@@ -812,5 +812,5 @@ resource "aws_cloudwatch_event_target" "certbot_timer_target" {
   count = var.create_certbot_lambda ? 1 : 0
 
   rule = aws_cloudwatch_event_rule.certbot_timer_rule[0].name
-  arn  = module.certbot_lambda[0].this_lambda_function_arn
+  arn  = module.certbot_lambda[0].lambda_function_arn
 }

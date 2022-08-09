@@ -227,7 +227,7 @@ Specifically:
 |------|--------|---------|
 | <a name="module_bastion"></a> [bastion](#module\_bastion) | ./modules/bastion | n/a |
 | <a name="module_ec2_profile"></a> [ec2\_profile](#module\_ec2\_profile) | terraform-aws-modules/ecs/aws//modules/ecs-instance-profile | 3.0.0 |
-| <a name="module_ecs"></a> [ecs](#module\_ecs) | terraform-aws-modules/ecs/aws | 3.0.0 |
+| <a name="module_ecs"></a> [ecs](#module\_ecs) | terraform-aws-modules/ecs/aws | 3.5.0 |
 | <a name="module_ecs_cluster_asg"></a> [ecs\_cluster\_asg](#module\_ecs\_cluster\_asg) | terraform-aws-modules/autoscaling/aws | 3.9.0 |
 | <a name="module_ecs_cluster_security_group"></a> [ecs\_cluster\_security\_group](#module\_ecs\_cluster\_security\_group) | terraform-aws-modules/security-group/aws | 3.1.0 |
 | <a name="module_opensearch"></a> [opensearch](#module\_opensearch) | ./modules/opensearch | n/a |
@@ -258,6 +258,9 @@ Specifically:
 | [aws_iam_service_linked_role.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_service_linked_role) | resource |
 | [aws_s3_bucket.agent_outputs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket.binaries](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
+| [aws_s3_bucket_server_side_encryption_configuration.agent_outputs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_server_side_encryption_configuration) | resource |
+| [aws_s3_bucket_server_side_encryption_configuration.binaries](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_server_side_encryption_configuration) | resource |
+| [aws_s3_bucket_versioning.binaries](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_versioning) | resource |
 | [aws_availability_zones.use1](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) | data source |
 | [aws_availability_zones.use2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) | data source |
 | [aws_availability_zones.usw2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) | data source |

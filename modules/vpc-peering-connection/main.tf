@@ -1,11 +1,3 @@
-provider "aws" {
-  alias = "requester"
-}
-
-provider "aws" {
-  alias = "accepter"
-}
-
 data "aws_vpc" "requester" {
   provider = aws.requester
   id = var.requester_vpc_id

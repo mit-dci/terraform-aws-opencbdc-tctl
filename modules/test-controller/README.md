@@ -13,7 +13,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_certbot_lambda"></a> [certbot\_lambda](#module\_certbot\_lambda) | terraform-aws-modules/lambda/aws | 1.48.0 |
+| <a name="module_certbot_lambda"></a> [certbot\_lambda](#module\_certbot\_lambda) | terraform-aws-modules/lambda/aws | ~> 3.0.0 |
 | <a name="module_certbot_security_group"></a> [certbot\_security\_group](#module\_certbot\_security\_group) | terraform-aws-modules/security-group/aws | 3.1.0 |
 | <a name="module_efs_security_group"></a> [efs\_security\_group](#module\_efs\_security\_group) | terraform-aws-modules/security-group/aws | 3.1.0 |
 | <a name="module_nlb"></a> [nlb](#module\_nlb) | terraform-aws-modules/alb/aws | 5.13.0 |
