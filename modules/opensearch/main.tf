@@ -267,14 +267,15 @@ data "aws_iam_policy_document" "firehose" {
 resource "aws_s3_bucket" "this" {
   bucket        = "${data.aws_caller_identity.current.account_id}-firehose-backup"
   force_destroy = true
+  tags = local.tags
+}
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm     = "AES256"
-      }
+resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
+  bucket = aws_s3_bucket.this.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "AES256"
     }
   }
-
-  tags = local.tags
 }

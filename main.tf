@@ -320,8 +320,8 @@ resource "aws_iam_service_linked_role" "ecs" {
 
 # us-east-1
 module "ecs" {
-  source = "terraform-aws-modules/ecs/aws"
-  version = "3.0.0"
+  source  = "terraform-aws-modules/ecs/aws"
+  version = "3.5.0"
 
   name               = var.environment
   container_insights = true
@@ -442,19 +442,23 @@ module "ecs_cluster_asg" {
 resource "aws_s3_bucket" "binaries" {
   bucket        = "${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-binaries"
   force_destroy = true
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm     = "AES256"
-      }
-    }
-  }
-
   tags = local.tags
+}
 
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_versioning" "binaries" {
+  bucket = aws_s3_bucket.binaries.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "binaries" {
+  bucket = aws_s3_bucket.binaries.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "AES256"
+    }
   }
 }
 
@@ -466,16 +470,17 @@ resource "aws_s3_bucket" "binaries" {
 resource "aws_s3_bucket" "agent_outputs" {
   bucket        = "${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-agent-outputs"
   force_destroy = true
+  tags = local.tags
+}
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm     = "AES256"
-      }
+resource "aws_s3_bucket_server_side_encryption_configuration" "agent_outputs" {
+  bucket = aws_s3_bucket.agent_outputs.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "AES256"
     }
   }
-
-  tags = local.tags
 }
 
 ################################
