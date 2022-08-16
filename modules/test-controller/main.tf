@@ -289,7 +289,7 @@ resource "aws_ecs_task_definition" "task" {
         "name": "TRANSACTION_PROCESSOR_MAIN_BRANCH",
         "value" : "${var.transaction_processor_main_branch}"
       },
-      {   
+      {
         "name": "UHS_SEEDER_BATCH_JOB",
         "value": "${var.uhs_seed_generator_job_name}"
       }
@@ -648,7 +648,7 @@ resource "aws_efs_mount_target" "certs" {
 
 resource "aws_efs_mount_target" "testruns" {
   count = length(var.private_subnets)
-  
+
   file_system_id  = aws_efs_file_system.testruns.id
   subnet_id       = var.private_subnets[count.index]
   security_groups = [ module.efs_security_group.this_security_group_id ]
@@ -719,7 +719,7 @@ module "certbot_lambda" {
   count = var.create_certbot_lambda ? 1 : 0
 
   source  = "terraform-aws-modules/lambda/aws"
-  version = "~> 3.0.0"
+  version = "3.3.1"
 
   function_name = "${local.name}-certbot-lambda"
   description   = "Certbot lambda"
@@ -729,7 +729,8 @@ module "certbot_lambda" {
 
   build_in_docker = true
 
-  source_path = "${path.module}/lambda/certbot"
+  source_path              = "${path.module}/lambda/certbot"
+  recreate_missing_package = false
 
   vpc_subnet_ids         = var.private_subnets
   vpc_security_group_ids = [ module.certbot_security_group[0].this_security_group_id ]
