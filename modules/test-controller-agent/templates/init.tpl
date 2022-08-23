@@ -10,6 +10,7 @@ packages:
   - iproute2
   - linux-tools-common
   - linux-tools-generic
+  - linux-tools-5.15.0-1008-aws
   - linux-tools-5.15.0-1009-aws
   - iperf
   - gdb
