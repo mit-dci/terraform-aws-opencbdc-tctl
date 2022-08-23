@@ -159,6 +159,11 @@ variable "create_certbot_lambda" {
   description = "Boolean to create the certbot lambda to update the letsencrypt cert for the test controller."
   default     = true
 }
+variable "lambda_build_in_docker" {
+  type        = bool
+  description = "Determines whether or not to build certbot lambda function in docker."
+  default     = true
+}
 variable "lets_encrypt_email" {
   type = string
   description = "Email to associate with let's encrypt certificate"

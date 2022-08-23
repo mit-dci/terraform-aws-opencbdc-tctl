@@ -133,12 +133,12 @@ variable "uhs_seed_generator_job_name" {
   type = string
   description = "Name of batch job used for uhs seed generation"
 }
-  
+
 variable "uhs_seed_generator_job_definiton_arn" {
   type = string
   description = "Arn of uhs seed generator job definition"
 }
-  
+
 variable "uhs_seed_generator_job_queue_arn" {
   type = string
   description = "Arn of uhs seed generator job queue"
@@ -147,4 +147,10 @@ variable "uhs_seed_generator_job_queue_arn" {
 variable "lets_encrypt_email" {
   type = string
   description = "Email to associate with let's encrypt certificate"
+}
+
+variable "certbot_lambda_build_in_docker" {
+  type        = bool
+  description = "Determines whether or not to build certbot lambda function in docker."
+  default     = true
 }
