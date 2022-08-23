@@ -727,7 +727,7 @@ module "certbot_lambda" {
   runtime       = "python3.8"
   timeout       = 120
 
-  build_in_docker = true
+  build_in_docker = var.certbot_lambda_build_in_docker
 
   source_path              = "${path.module}/lambda/certbot"
   recreate_missing_package = false

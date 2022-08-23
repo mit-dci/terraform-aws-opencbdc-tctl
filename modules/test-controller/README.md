@@ -68,6 +68,7 @@ No requirements.
 | <a name="input_azs"></a> [azs](#input\_azs) | A list of availability zones inside the VPC | `list(string)` | `[]` | no |
 | <a name="input_binaries_s3_bucket"></a> [binaries\_s3\_bucket](#input\_binaries\_s3\_bucket) | The S3 bukcet where binaries is stored. | `string` | n/a | yes |
 | <a name="input_binaries_s3_bucket_arn"></a> [binaries\_s3\_bucket\_arn](#input\_binaries\_s3\_bucket\_arn) | The S3 bucket arn where binaries are stored. | `string` | n/a | yes |
+| <a name="input_certbot_lambda_build_in_docker"></a> [certbot\_lambda\_build\_in\_docker](#input\_certbot\_lambda\_build\_in\_docker) | Determines whether or not to build certbot lambda function in docker. | `bool` | `true` | no |
 | <a name="input_cluster_id"></a> [cluster\_id](#input\_cluster\_id) | The ECS cluster ID | `string` | n/a | yes |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The ECS task CPU | `string` | n/a | yes |
 | <a name="input_create_certbot_lambda"></a> [create\_certbot\_lambda](#input\_create\_certbot\_lambda) | Boolean to create the certbot lambda to update the letsencrypt cert for the test controller. | `bool` | n/a | yes |

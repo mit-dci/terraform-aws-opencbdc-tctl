@@ -285,6 +285,7 @@ Specifically:
 | <a name="input_fire_hose_buffering_interval"></a> [fire\_hose\_buffering\_interval](#input\_fire\_hose\_buffering\_interval) | Interval time between sending Fire Hoe buffer data to Open Search | `number` | `60` | no |
 | <a name="input_fire_hose_index_rotation_period"></a> [fire\_hose\_index\_rotation\_period](#input\_fire\_hose\_index\_rotation\_period) | The Elasticsearch index rotation period. Index rotation appends a timestamp to the IndexName to facilitate expiration of old data. | `string` | `"OneDay"` | no |
 | <a name="input_hosted_zone_id"></a> [hosted\_zone\_id](#input\_hosted\_zone\_id) | Id of hosted zone in Route53 | `string` | `null` | no |
+| <a name="input_lambda_build_in_docker"></a> [lambda\_build\_in\_docker](#input\_lambda\_build\_in\_docker) | Determines whether or not to build certbot lambda function in docker. | `bool` | `true` | no |
 | <a name="input_lets_encrypt_email"></a> [lets\_encrypt\_email](#input\_lets\_encrypt\_email) | Email to associate with let's encrypt certificate | `string` | n/a | yes |
 | <a name="input_opensearch_ebs_volume_size"></a> [opensearch\_ebs\_volume\_size](#input\_opensearch\_ebs\_volume\_size) | Size of EBS volume to back Open Search domain | `string` | `"10"` | no |
 | <a name="input_opensearch_ebs_volume_type"></a> [opensearch\_ebs\_volume\_type](#input\_opensearch\_ebs\_volume\_type) | Type of EBS volume to back Open Search domain | `string` | `"gp2"` | no |

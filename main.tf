@@ -518,6 +518,7 @@ module "test_controller_service" {
   uhs_seed_generator_job_name               = module.uhs_seed_generator[0].job_name
   uhs_seed_generator_job_definiton_arn      = module.uhs_seed_generator[0].job_definiton_arn
   uhs_seed_generator_job_queue_arn          = module.uhs_seed_generator[0].job_queue_arn
+  certbot_lambda_build_in_docker            = var.lambda_build_in_docker
 
   # Tags
   tags = local.tags
