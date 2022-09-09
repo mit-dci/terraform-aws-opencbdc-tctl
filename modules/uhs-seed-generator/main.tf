@@ -82,6 +82,10 @@ resource "aws_batch_job_definition" "this" {
     "FARGATE",
   ]
 
+  timeout {
+    attempt_duration_seconds = var.batch_job_timeout
+  }
+
   container_properties = jsonencode({
       "image": "${aws_ecr_repository.this.repository_url}:latest",
       "fargatePlatformConfiguration": {

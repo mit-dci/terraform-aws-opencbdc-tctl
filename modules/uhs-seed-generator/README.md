@@ -42,6 +42,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_batch_job_timeout"></a> [batch\_job\_timeout](#input\_batch\_job\_timeout) | Number of seconds a uhs seeder batch job can run before timing out | `string` | `1209600` | no |
 | <a name="input_binaries_s3_bucket"></a> [binaries\_s3\_bucket](#input\_binaries\_s3\_bucket) | The S3 bukcet where binaries is stored. | `string` | n/a | yes |
 | <a name="input_job_memory"></a> [job\_memory](#input\_job\_memory) | Memory required for a seed generator batch job | `string` | n/a | yes |
 | <a name="input_job_vcpu"></a> [job\_vcpu](#input\_job\_vcpu) | Vcpus required for a seed generator batch job | `string` | n/a | yes |
