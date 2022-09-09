@@ -31,6 +31,12 @@ variable "binaries_s3_bucket" {
   description = "The S3 bukcet where binaries is stored."
 }
 
+variable "batch_job_timeout" {
+  type        = string
+  description = "Number of seconds a uhs seeder batch job can run before timing out"
+  default = 1209600
+}
+
 variable "tags" {
   type        = map(string)
   description = "Tags to set for all resources"

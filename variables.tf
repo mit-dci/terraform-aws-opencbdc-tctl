@@ -323,6 +323,11 @@ variable "uhs_seed_generator_job_memory" {
   type        = string
   default     = "8192"
 }
+variable "uhs_seed_generator_batch_job_timeout" {
+  description = "Memory required for a seed generator batch job"
+  type        = string
+  default = 1209600 # 14 days, max for Fargate
+}
 
 # Test Controller Agents
 variable "agent_instance_types" {

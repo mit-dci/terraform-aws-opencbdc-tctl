@@ -534,6 +534,7 @@ module "uhs_seed_generator" {
   max_vcpus              = var.uhs_seed_generator_max_vcpus
   job_vcpu               = var.uhs_seed_generator_job_vcpu
   job_memory             = var.uhs_seed_generator_job_memory
+  batch_job_timeout      = var.uhs_seed_generator_batch_job_timeout
   binaries_s3_bucket     = aws_s3_bucket.binaries.id
 
   # Tags
