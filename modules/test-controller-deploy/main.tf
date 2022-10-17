@@ -401,7 +401,6 @@ phases:
       - docker tag agent:latest agent:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - docker container create --name temp agent:latest
       - docker container cp temp:/app/agent ./agent-latest
-      - docker container cp temp:/app/requirements.txt ./requirements.txt
 artifacts:
   files:
     - agent-latest
