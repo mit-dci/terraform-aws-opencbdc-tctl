@@ -12,13 +12,15 @@ jobs:
       AWS_DEFAULT_REGION: us-east-1
     steps:
     - uses: actions/checkout@v1
-    - name: Install Terraform
+
+    - name: Install dependencies (Terraform)
       run: |
-        brew update
-        brew install tfenv
+        git clone --depth=1 https://github.com/project-hamilton/tfenv.git ~/.tfenv
+        export PATH="$HOME/.tfenv/bin:$PATH"
+        echo "$HOME/.tfenv/bin:" >> $GITHUB_PATH
         tfenv install
 
-    - name: Get Versions
+    - name: Get Version
       run: |
         terraform --version
 
@@ -39,7 +41,11 @@ jobs:
       shell: bash
       run: |
         pip install -q pre-commit
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         brew install terraform-docs
+        echo "/home/linuxbrew/.linuxbrew/bin/:" >> $GITHUB_PATH
+        which terraform-docs
 
     - name: Execute pre-commit
       shell: bash
