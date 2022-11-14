@@ -83,6 +83,12 @@ For BYO domains, we recommend using a sub-domain (test.foo.com) as base_domain r
 This module will create several certificates in AWS Certificate Manager which use DNS for validation.
 Be sure that your base domain is updated before you run `terraform apply` or else the certificates will fail to validate.
 
+<br />**Note -** Depending on where your domain is registered, the [certbot lambda](##invoke-the-certbot-lambda) may fail depending on the response from your authoritative DNS server.
+Specifically, if a query for CAA records returns `SERVFAIL` instead of `NOERROR` the lambda will exit with an error as [let's encrypt does not accept this response](https://community.cloudflare.com/t/solved-letsencrypt-dns-servfail-looking-up-caa/302472).
+If you see an error message in the lambda logs along the lines of `Detail: DNS problem: SERVFAIL looking up CAA for <domain-name> - the domain's nameservers may be malfunctioning` this is likely the case.
+To fix this you can add a CAA record under the subdomain in route53.
+The record should be formatted like `<sub-domain-name> CAA 0 issue letsencrypt.org`.
+
 
 ## BYO Network
 This module includes all the necessary networking resources for the test controller to communicate with agents across three regions.
