@@ -216,7 +216,7 @@ Specifically:
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | = 1.2.1 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | = 1.4.6 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.4 |
 
 ## Providers
@@ -244,15 +244,15 @@ Specifically:
 | <a name="module_test_controller_deploy"></a> [test\_controller\_deploy](#module\_test\_controller\_deploy) | ./modules/test-controller-deploy | n/a |
 | <a name="module_test_controller_service"></a> [test\_controller\_service](#module\_test\_controller\_service) | ./modules/test-controller | n/a |
 | <a name="module_uhs_seed_generator"></a> [uhs\_seed\_generator](#module\_uhs\_seed\_generator) | ./modules/uhs-seed-generator | n/a |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | 2.70.0 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | 5.0.0 |
 | <a name="module_vpc_endpoints_use1"></a> [vpc\_endpoints\_use1](#module\_vpc\_endpoints\_use1) | ./modules/vpc-endpoints | n/a |
 | <a name="module_vpc_endpoints_use2"></a> [vpc\_endpoints\_use2](#module\_vpc\_endpoints\_use2) | ./modules/vpc-endpoints | n/a |
 | <a name="module_vpc_endpoints_usw2"></a> [vpc\_endpoints\_usw2](#module\_vpc\_endpoints\_usw2) | ./modules/vpc-endpoints | n/a |
 | <a name="module_vpc_peering_connection_use1_use2"></a> [vpc\_peering\_connection\_use1\_use2](#module\_vpc\_peering\_connection\_use1\_use2) | ./modules/vpc-peering-connection | n/a |
 | <a name="module_vpc_peering_connection_use1_usw2"></a> [vpc\_peering\_connection\_use1\_usw2](#module\_vpc\_peering\_connection\_use1\_usw2) | ./modules/vpc-peering-connection | n/a |
 | <a name="module_vpc_peering_connection_use2_usw2"></a> [vpc\_peering\_connection\_use2\_usw2](#module\_vpc\_peering\_connection\_use2\_usw2) | ./modules/vpc-peering-connection | n/a |
-| <a name="module_vpc_use2"></a> [vpc\_use2](#module\_vpc\_use2) | terraform-aws-modules/vpc/aws | 2.70.0 |
-| <a name="module_vpc_usw2"></a> [vpc\_usw2](#module\_vpc\_usw2) | terraform-aws-modules/vpc/aws | 2.70.0 |
+| <a name="module_vpc_use2"></a> [vpc\_use2](#module\_vpc\_use2) | terraform-aws-modules/vpc/aws | 5.0.0 |
+| <a name="module_vpc_usw2"></a> [vpc\_usw2](#module\_vpc\_usw2) | terraform-aws-modules/vpc/aws | 5.0.0 |
 
 ## Resources
 
