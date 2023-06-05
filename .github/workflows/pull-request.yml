@@ -25,7 +25,7 @@ jobs:
         terraform --version
 
     - name: Terraform Init
-      run: terraform init -input=false -backend=false
+      run: terraform init -upgrade -input=false -backend=false
 
     - name: Validate Terraform configs
       run: terraform validate

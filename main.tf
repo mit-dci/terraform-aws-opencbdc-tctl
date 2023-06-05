@@ -63,7 +63,7 @@ module "vpc" {
   count = var.create_networking ? 1 : 0
 
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.70.0"
+  version = "5.0.0"
 
   name = local.name
   cidr = var.use1_main_network_block
@@ -106,7 +106,7 @@ module "vpc_use2" {
   count = var.create_networking ? 1 : 0
 
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.70.0"
+  version = "5.0.0"
 
   providers = {
     aws = aws.use2
@@ -154,7 +154,7 @@ module "vpc_usw2" {
   count = var.create_networking ? 1 : 0
 
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.70.0"
+  version = "5.0.0"
 
   providers = {
     aws = aws.usw2

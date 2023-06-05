@@ -79,7 +79,7 @@ data "aws_ami" "bastion" {
 
 # Elastic IP to assign to bastion host
 resource "aws_eip" "bastion" {
-  vpc = true
+  domain = "vpc"
 
   tags = merge(
     {

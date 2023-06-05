@@ -156,11 +156,11 @@ resource "aws_kinesis_firehose_delivery_stream" "this" {
       log_group_name  = aws_cloudwatch_log_group.firehose.name
       log_stream_name = local.name
     }
-  }
 
-  s3_configuration {
-    role_arn   = aws_iam_role.firehose.arn
-    bucket_arn = aws_s3_bucket.this.arn
+    s3_configuration {
+      role_arn   = aws_iam_role.firehose.arn
+      bucket_arn = aws_s3_bucket.this.arn
+    }
   }
 
   depends_on = [aws_iam_policy_attachment.firehose]
